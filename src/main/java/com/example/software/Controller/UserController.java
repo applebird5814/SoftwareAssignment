@@ -8,12 +8,17 @@ import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 @RequestMapping("/user")
@@ -26,21 +31,21 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/login")
-    public String login(@RequestBody User user){
+    public String login(HttpServletResponse httpServletResponse, @RequestBody User user){
         Boolean b = userService.loginValidation(user.getUsername(),user.getPassword());
         if(b)
         {
-            return new Gson().toJson(new Response(true,"Login Success!"));
+            Cookie cookie = new Cookie("username",user.getUsername());
+            cookie.setPath("/");
+            cookie.setMaxAge(3600);
+            httpServletResponse.addCookie(cookie);
+            String welcome = "Login Success! Welcome back "+ user.getUsername();
+            return new Gson().toJson(new Response(true,welcome));
         }
         else
         {
             return new Gson().toJson(new Response(false,"Username or password is incorrect!"));
         }
-        //此处接收User对象并判断是否存在于数据库
-        //成功返回成功信息
-        //调用session添加信息
-        //失败返回失败信息
-        //返回为json数据，前端通过ajax决定跳转页面或者显示alert，用户名或密码错误
     }
 
     @ResponseBody
@@ -63,11 +68,28 @@ public class UserController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest httpServletRequest)
+    {
+        Cookie[] cookies = httpServletRequest.getCookies();
+        {
+            for(int i=0;i<cookies.length;i++)
+            {
+                // delete all the cookies
+                cookies[i].setMaxAge(0);
+            }
+        }
+        return new Gson().toJson(new Response(true,"Logout Success"));
+    }
+
     @RequestMapping("/history")
-    public String history(){
+    public String history(Model model, @CookieValue("username") String username){
+        //System.out.println(username);
+
         //添加该user的所有history
         //返回页面
-        return "history";
+        return "History";
     }
 
 }

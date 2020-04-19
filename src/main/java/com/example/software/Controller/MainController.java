@@ -33,4 +33,10 @@ public class MainController {
         return "Login";
     }
 
+    @RequestMapping("/homePage")
+    public String homePage()
+    {
+        return "HomePage";
+    }
+
 }

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
+    <meta charset="UTF-8">
+    <title>HomePage</title>
+</head>
+<body>
+    HomePage
+    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="logout()">Log Out</button>
+
+    <script>
+        console.log(document.cookie);
+        function logout() {
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: '/user/logout',
+                contentType: "application/json",
+                success:function (data) {
+                    if(data.success)
+                    {
+                        alert(data.message);
+                        window.location.href='/login';
+                    }
+                }
+            });
+        }
+    </script>
+</body>
+</html>
