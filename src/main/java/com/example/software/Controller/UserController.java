@@ -2,6 +2,7 @@ package com.example.software.Controller;
 
 import com.example.software.Entity.Response;
 import com.example.software.Entity.User;
+import com.example.software.Service.DiaryService;
 import com.example.software.Service.UserService;
 import com.google.gson.Gson;
 import com.sun.deploy.net.HttpResponse;
@@ -28,6 +29,10 @@ public class UserController {
     @Autowired
     @Qualifier("userServiceImpl")
     UserService userService;
+
+    @Autowired
+    @Qualifier("diaryServiceImpl")
+    DiaryService diaryService;
 
     @ResponseBody
     @RequestMapping("/login")
@@ -84,12 +89,31 @@ public class UserController {
     }
 
     @RequestMapping("/history")
-    public String history(Model model, @CookieValue("username") String username){
+    public String history(Model model, @CookieValue(value = "username",required = false) String username){
         //System.out.println(username);
-
+        if(username==null)
+        {
+            System.out.println("没有cookies");
+            // 应当返回需要登录页面并跳转到注册登录页
+        }
         //添加该user的所有history
         //返回页面
         return "History";
     }
+
+
+    @RequestMapping("/viewDiary")
+    public String viewDiary(Model model, @CookieValue(value = "username",required = false) String username)
+    {
+        if(username==null)
+        {
+            //返回登录页面
+        }
+        model.addAttribute(new Gson().toJson(diaryService.getCovers()));
+        model.addAttribute(new Gson().toJson(diaryService.getPaperColors()));
+        model.addAttribute(new Gson().toJson(diaryService.getTypeOfPapers()));
+        return "ViewDiary";
+    }
+
 
 }
