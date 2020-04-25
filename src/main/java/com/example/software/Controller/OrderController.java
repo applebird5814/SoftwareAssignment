@@ -2,6 +2,11 @@ package com.example.software.Controller;
 
 import com.example.software.Entity.Diary;
 import com.example.software.Entity.DiaryOrder;
+import com.example.software.Entity.Response;
+import com.example.software.Service.OrderService;
+import com.google.gson.Gson;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -11,6 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/order")
 @Controller
 public class OrderController {
+
+    @Autowired
+    @Qualifier("orderServiceImpl")
+    OrderService orderService;
 
     @RequestMapping("/addDiary")
     public String addDiary(Model model){
@@ -42,6 +51,23 @@ public class OrderController {
         //将地址信息列表以及运送方式列表返回给前端
         return "选择地址以及运送方式页面";
     }
+
+    @ResponseBody
+    @RequestMapping("/addAddressAndDeliverOption")
+    public String addAddressAndDeliverOption(@RequestBody DiaryOrder diaryOrder){
+        System.out.println(diaryOrder.getId());
+        Boolean b = orderService.addAddressAndDeliverOption(diaryOrder.getId(),diaryOrder.getAddress(),diaryOrder.getDeliverOption());
+        if(b)
+        {
+            return new Gson().toJson(new Response(true,"Change Success"));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"Error!"));
+        }
+    }
+
+
 
     @ResponseBody
     @RequestMapping("/paymentSuccess")

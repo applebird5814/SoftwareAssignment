@@ -39,4 +39,11 @@ public class MainController {
         return "HomePage";
     }
 
+    @RequestMapping("/editOrder")
+    public String editOrder()
+    {
+        return "editOrder";
+    }
+
+
 }
