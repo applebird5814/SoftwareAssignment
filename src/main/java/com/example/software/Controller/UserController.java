@@ -5,7 +5,6 @@ import com.example.software.Entity.User;
 import com.example.software.Service.DiaryService;
 import com.example.software.Service.UserService;
 import com.google.gson.Gson;
-import com.sun.deploy.net.HttpResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;

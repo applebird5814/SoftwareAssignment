@@ -29,14 +29,19 @@
                 </div>
 
                 <button class="btn btn-lg btn-primary btn-block" type="button" onclick="signIn()">Sign in</button>
+                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="toRegister()">Register</button>
 
             </form>
+
         </div>
     </div>
 </div>
 
 
 <script>
+    function toRegister(){
+        window.location.href = "register"
+    }
     function signIn() {
         var password = document.getElementById("inputPassword").value;
         var username = document.getElementById("inputUsername").value;
