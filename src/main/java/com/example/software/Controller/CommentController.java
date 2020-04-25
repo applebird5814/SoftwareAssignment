@@ -26,6 +26,7 @@ public class CommentController {
     private String viewComment(Model model){
         //添加commentall信息
         //返回页面
+        // test
         return "viewComment";
     }
 
