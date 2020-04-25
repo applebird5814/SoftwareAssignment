@@ -1,14 +1,17 @@
 package com.example.software.Controller;
 
 import com.example.software.Entity.DiaryDetail.Cover;
+import com.example.software.Entity.DiaryOrder;
 import com.example.software.Entity.Response;
 import com.example.software.Service.DiaryService;
+import com.example.software.Service.OrderService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.CookieValue;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -21,6 +24,10 @@ public class AdminController {
     @Autowired
     @Qualifier("diaryServiceImpl")
     DiaryService diaryService;
+
+    @Autowired
+    @Qualifier("orderServiceImpl")
+    OrderService orderService;
 
     @RequestMapping("/")
     public String adminIndex()
@@ -56,6 +63,20 @@ public class AdminController {
         else
         {
             return new Gson().toJson(new Response(false,"There's a cover with the same information!"));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/changeState")
+    public String changeState(@RequestBody DiaryOrder diaryOrder){
+        Boolean b = orderService.changeOrderState(diaryOrder.getId(),diaryOrder.getState());
+        if(b)
+        {
+            return new Gson().toJson(new Response(true,"Change Success"));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"Error!"));
         }
     }
 

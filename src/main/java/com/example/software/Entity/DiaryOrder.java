@@ -1,13 +1,15 @@
 package com.example.software.Entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class DiaryOrder {
     @Id
-    private String id;
+    @GeneratedValue
+    private int id;
     @NotNull
     private String userId;
     private String address;
@@ -17,11 +19,11 @@ public class DiaryOrder {
     @NotNull
     private String state;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 
