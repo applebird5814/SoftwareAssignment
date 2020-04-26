@@ -1,8 +1,10 @@
 package com.example.software.Controller;
 
+import com.example.software.Entity.Admin;
 import com.example.software.Entity.DiaryDetail.Cover;
 import com.example.software.Entity.DiaryOrder;
 import com.example.software.Entity.Response;
+import com.example.software.Service.AdminService;
 import com.example.software.Service.DiaryService;
 import com.example.software.Service.OrderService;
 import com.google.gson.Gson;
@@ -10,6 +12,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -28,6 +32,10 @@ public class AdminController {
     @Autowired
     @Qualifier("orderServiceImpl")
     OrderService orderService;
+
+    @Autowired
+    @Qualifier("AdminServiceImpl")
+    AdminService userService;
 
     @RequestMapping("/")
     public String adminIndex()
@@ -102,6 +110,27 @@ public class AdminController {
         return "commentManger";
     }
     //构建删除评论功能
+
+
+    @ResponseBody
+    @RequestMapping("/AdminRegister")
+    public String AdminRegister(@RequestBody @Valid Admin user, BindingResult result){
+        if(result.hasErrors()) {
+            for (ObjectError error : result.getAllErrors()) {
+                System.out.println(error.getDefaultMessage());
+            }
+            return new Gson().toJson(new Response(false,"Invalid Information"));
+        }
+        Boolean b = userService.createAdmin(user);
+        if(b)
+        {
+            return new Gson().toJson(new Response(true,"Register Success!"));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"User already exist！"));
+        }
+    }
 
 
 }

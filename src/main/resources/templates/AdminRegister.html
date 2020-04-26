@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
     <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
-    <title>首页</title>
+    <title>admin register</title>
 </head>
 <body>
 
@@ -34,7 +34,7 @@
                     <input type="password" id="reInputPassword" class="form-control" placeholder="Password Again" required>
                 </div>
 
-                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="register()">Sign Up</button>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="AdminRegister()">Sign Up</button>
 
             </form>
         </div>
@@ -43,7 +43,7 @@
 
 <script>
 
-    function register() {
+    function AdminRegister() {
         var password = document.getElementById("inputPassword").value;
         var repeatPassword = document.getElementById("reInputPassword").value;
         if(password==repeatPassword) {
@@ -58,7 +58,7 @@
             $.ajax({
                 type: "POST",
                 dataType: "json",
-                url: '/admin/register',
+                url: '/admin/AdminRegister',
                 contentType: "application/json",
                 data: json,
                 success:function (data) {

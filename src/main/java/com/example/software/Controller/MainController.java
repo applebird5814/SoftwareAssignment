@@ -45,5 +45,11 @@ public class MainController {
         return "editOrder";
     }
 
+    @RequestMapping("/AdminRegister")
+    public String AdminRegister()
+    {
+        return "AdminRegister";
+    }
+
 
 }
