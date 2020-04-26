@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
+    <title>首页</title>
+</head>
+<body>
+
+<div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <form class="form-signUp" id="signUpForm">
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 font-weight-normal">Create Your Account</h1>
+                </div>
+
+                <div class="form-group">
+                    <label for="inputUsername">Username</label>
+                    <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus>
+                </div>
+
+
+                <div class="form-group">
+                    <label for="inputPassword">Password</label>
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="reInputPassword">Input Password Again</label>
+                    <input type="password" id="reInputPassword" class="form-control" placeholder="Password Again" required>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="register()">Sign Up</button>
+
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function register() {
+        var password = document.getElementById("inputPassword").value;
+        var repeatPassword = document.getElementById("reInputPassword").value;
+        if(password==repeatPassword) {
+            var username = document.getElementById("inputUsername").value;
+            var id = new Date().getTime().toString();
+            var json = JSON.stringify({
+                "id": id,
+                "username": username,
+                "password": password,
+            });
+
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: '/admin/register',
+                contentType: "application/json",
+                data: json,
+                success:function (data) {
+                    if(data.success)
+                    {
+                        alert(data.message);
+                        window.location.href='/index';
+                    }
+                    else
+                    {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+        else
+        {
+            alert("The two password is not the same!");
+        }
+    }
+</script>
+
+</body>
+</html>
