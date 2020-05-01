@@ -33,7 +33,14 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public void deleteUser(Admin admin) {
+    public boolean deleteAdmin(Admin admin) {
+
+        if(adminDao.findByUsername(admin.getUsername()).isPresent())
+        {
+            adminDao.delete(admin);
+            return true;
+        }
+        return false;
 
     }
 

@@ -35,8 +35,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void deleteUser(User user) {
-
+    public boolean deleteUser(User user) {
+        if(userDao.findByUsername(user.getUsername()).isPresent())
+        {
+            userDao.delete(user);
+            return true;
+        }
+        return false;
     }
 
     @Override

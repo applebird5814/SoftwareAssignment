@@ -9,7 +9,7 @@ public interface AdminService {
 
     boolean createAdmin(Admin admin);
 
-    void deleteUser(Admin admin);
+    boolean deleteAdmin(Admin admin);
 
     boolean loginValidation(String username,String password);
 }

@@ -10,7 +10,7 @@ public interface UserService {
 
     boolean createUser(User user);
 
-    void deleteUser(User user);
+    boolean deleteUser(User user);
 
     boolean loginValidation(String username,String password);
 }
