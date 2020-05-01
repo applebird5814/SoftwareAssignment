@@ -43,6 +43,7 @@
 
 <script>
     function addAddressDelivery() {
+
         var address = document.getElementById("inputAddress").value;
         var deliveryOption = document.getElementsByName("delivery").value;
 
@@ -54,7 +55,7 @@
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: '/diaryOrder/addAddressAndDeliverOption',
+            url: '/order/addAddressAndDeliverOption',
             contentType: "application/json",
             data: json,
             success:function (data) {
