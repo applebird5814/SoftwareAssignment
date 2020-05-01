@@ -51,5 +51,10 @@ public class MainController {
         return "AdminRegister";
     }
 
+    @RequestMapping("/AddAddressAndDeliverOption")
+    public String AddAddressAndDeliverOption()
+    {
+        return "AddAddressAndDeliverOption";
+    }
 
 }
