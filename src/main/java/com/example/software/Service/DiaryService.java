@@ -15,4 +15,13 @@ public interface DiaryService {
     List<TypeOfPaper> getTypeOfPapers();
 
     boolean addCover(Cover cover);
+    boolean deleteCover(Cover cover);
+
+    boolean addPaperColor(PaperColor paperColor);
+    boolean deletePaperColor(PaperColor paperColor);
+
+    boolean addTypeOfPaper(TypeOfPaper typeOfPaper);
+    boolean deleteTypeOfPaper(TypeOfPaper typeOfPaper);
+
+
 }

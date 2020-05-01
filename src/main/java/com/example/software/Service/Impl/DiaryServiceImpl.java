@@ -48,4 +48,53 @@ public class DiaryServiceImpl implements DiaryService {
         coverDao.saveAndFlush(cover);
         return true;
     }
+
+    @Override
+    public boolean deleteCover(Cover cover) {
+        if(coverDao.findCoverByCoverName(cover.getCoverName()).isPresent())
+        {
+            coverDao.deleteInBatch((Iterable<Cover>) cover);
+            coverDao.flush();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addPaperColor(PaperColor paperColor) {
+        if(paperColorDao.findPaperColorByColor(paperColor.getColor()).isPresent())
+        {
+            return false;
+        }
+        paperColorDao.saveAndFlush(paperColor);
+        return true;
+    }
+
+    public boolean deletePaperColor(PaperColor paperColor) {
+        if(paperColorDao.findPaperColorByColor(paperColor.getColor()).isPresent())
+        {
+            paperColorDao.deleteInBatch((Iterable<PaperColor>) paperColor);
+            paperColorDao.flush();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean addTypeOfPaper(TypeOfPaper typeOfPaper) {
+        if(typeOfPaperDao.findTypeOfPaperBytypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent())
+        {
+            return false;
+        }
+        typeOfPaperDao.saveAndFlush(typeOfPaper);
+        return true;
+    }
+
+    public boolean deleteTypeOfPaper(TypeOfPaper typeOfPaper) {
+        if(typeOfPaperDao.findTypeOfPaperBytypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent())
+        {
+            typeOfPaperDao.deleteInBatch((Iterable<TypeOfPaper>) typeOfPaper);
+            typeOfPaperDao.flush();
+            return true;
+        }
+        return false;
+    }
 }
