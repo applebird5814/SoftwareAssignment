@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
+    <title>Login</title>
+</head>
+<body>
+
+<div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <form class="form-signIn">
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 font-weight-normal">Sign In As Admin</h1>
+                </div>
+
+                <div class="form-label-group">
+                    <input type="text" id="inputUsername" class="form-control" placeholder="Username or Email address" required autofocus>
+                    <label for="inputUsername">Username</label>
+                </div>
+
+                <div class="form-label-group">
+                    <input type="password" id="inputPassword" class="form-control" placeholder="Password" required>
+                    <label for="inputPassword">Password</label>
+                </div>
+
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="signIn()">Sign in</button>
+                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="toRegister()">Register</button>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+
+<script>
+    function toRegister(){
+        window.location.href = "AdminRegister"
+    }
+    function signIn() {
+        var password = document.getElementById("inputPassword").value;
+        var username = document.getElementById("inputUsername").value;
+        var json = JSON.stringify({
+            "username": username,
+            "password": password,
+        });
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/admin/adminlogin',
+            contentType: "application/json",
+            data: json,
+            success:function (data) {
+                if(data.success)
+                {
+
+                    alert(data.message);
+                    window.location.href='/homePage';
+                }
+                else
+                {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

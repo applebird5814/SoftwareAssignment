@@ -57,4 +57,9 @@ public class MainController {
         return "AddAddressAndDeliverOption";
     }
 
+    @RequestMapping("/AdminLogin")
+    public String AdminLogin()
+    {
+        return "AdminLogin";
+    }
 }
