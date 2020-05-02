@@ -7,6 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface TypeOfPaperDao extends JpaRepository<TypeOfPaper,String> {
-    Optional<TypeOfPaper> findTypeOfPaperBytypeOfPaper(String TypeOfPaper);
+    Optional<TypeOfPaper> findTypeOfPaperByTypeOfPaper(String TypeOfPaper);
     Optional<TypeOfPaper> deleteTypeOfPaperById(String TypeOfPaper);
 }
