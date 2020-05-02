@@ -30,12 +30,8 @@
                     <input type="radio" name="delivery" id="express" value="express">
                     <label for="express">Express Parcel</label>
                 </div><br>
-
                 <button class="btn btn-lg btn-primary btn-block" type="button" onclick="addAddressDelivery()">Submit</button>
-
-
             </form>
-
         </div>
     </div>
 </div>
@@ -43,11 +39,11 @@
 
 <script>
     function addAddressDelivery() {
-
         var address = document.getElementById("inputAddress").value;
         var deliveryOption = document.getElementsByName("delivery").value;
-
+        var id = 1;
         var json = JSON.stringify({
+            "id" : id,
             "address": address,
             "deliveryOption": deliveryOption,
         });
