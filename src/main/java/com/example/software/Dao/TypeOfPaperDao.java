@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface TypeOfPaperDao extends JpaRepository<TypeOfPaper,String> {
     Optional<TypeOfPaper> findTypeOfPaperByTypeOfPaper(String TypeOfPaper);
-    Optional<TypeOfPaper> deleteTypeOfPaperById(String TypeOfPaper);
+    void deleteTypeOfPaperById(String TypeOfPaper);
 }
