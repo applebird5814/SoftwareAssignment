@@ -57,4 +57,11 @@ public class MainController {
         return "AddAddressAndDeliverOption";
     }
 
+    @RequestMapping("/Customization")
+    public String Customization()
+    {
+        return "Customization";
+    }
+
+
 }

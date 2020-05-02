@@ -8,5 +8,5 @@ import java.util.Optional;
 
 public interface PaperColorDao extends JpaRepository<PaperColor,String> {
     Optional<PaperColor> findPaperColorByColor(String PaperColorName);
-    Optional<PaperColor> deletePaperColorByColor(String PaperColorName);
+    void deletePaperColorByColor(String PaperColorName);
 }
