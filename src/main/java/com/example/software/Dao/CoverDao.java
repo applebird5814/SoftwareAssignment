@@ -7,9 +7,6 @@ import java.util.Optional;
 
 
 public interface CoverDao extends JpaRepository<Cover,String> {
-
     Optional<Cover> findCoverByCoverName(String coverName);
-    Optional<Cover> deleteCoverByCoverName(String coverName);
-//abc
-
+    void deleteCoverByCoverName(String coverName);
 }
