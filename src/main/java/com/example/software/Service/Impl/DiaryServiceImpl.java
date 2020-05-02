@@ -80,7 +80,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     public boolean addTypeOfPaper(TypeOfPaper typeOfPaper) {
-        if(typeOfPaperDao.findTypeOfPaperBytypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent())
+        if(typeOfPaperDao.findTypeOfPaperByTypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent())
         {
             return false;
         }
@@ -89,7 +89,7 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
     public boolean deleteTypeOfPaper(TypeOfPaper typeOfPaper) {
-        if(typeOfPaperDao.findTypeOfPaperBytypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent())
+        if(typeOfPaperDao.findTypeOfPaperByTypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent())
         {
             typeOfPaperDao.deleteInBatch((Iterable<TypeOfPaper>) typeOfPaper);
             typeOfPaperDao.flush();
