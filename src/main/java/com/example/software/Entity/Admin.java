@@ -20,6 +20,13 @@ public class Admin {
     @Pattern(regexp = "[a-zA-Z0-9]{6,15}")
     private String password;
 
+    @NotNull
+    private String type;
+
+    public String getType() {
+        return type;
+    }
+
     public String getId() {
         return id;
     }
@@ -50,6 +57,7 @@ public class Admin {
                 "id='" + id + '\'' +
                 ", username='" + username + '\'' +
                 ", password='" + password + '\'' +
+                ", type='" + type + '\'' +
                 '}';
     }
 }

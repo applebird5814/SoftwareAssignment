@@ -40,12 +40,12 @@
 <script>
     function addAddressDelivery() {
         var address = document.getElementById("inputAddress").value;
-        var deliveryOption = document.getElementsByName("delivery").value;
+        var deliverOption = document.querySelector('input[type=radio][name=delivery]');
         var id = 1;
         var json = JSON.stringify({
             "id" : id,
             "address": address,
-            "deliveryOption": deliveryOption,
+            "deliverOption": deliverOption.value,
         });
 
         $.ajax({

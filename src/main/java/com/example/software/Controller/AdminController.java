@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
@@ -49,6 +50,26 @@ public class AdminController {
     {
         return "adminIndex";
     }
+
+    @ResponseBody
+    @RequestMapping("/adminlogin")
+    public String login(HttpServletResponse httpServletResponse, @RequestBody Admin admin){
+        Boolean b = adminService.loginValidation(admin.getUsername(),admin.getPassword());
+        if(b)
+        {
+            Cookie cookie = new Cookie("username",admin.getUsername());
+            cookie.setPath("/");
+            cookie.setMaxAge(3600);
+            httpServletResponse.addCookie(cookie);
+            String welcome = "Login Success! Welcome back admin "+ admin.getUsername();
+            return new Gson().toJson(new Response(true,welcome));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"Username or password is incorrect!"));
+        }
+    }
+
 
     @RequestMapping("/editDiary")
     public String editDiary(Model model, @CookieValue(value = "admin",required = false) String admin){
