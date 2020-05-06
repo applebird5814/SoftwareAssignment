@@ -10,16 +10,10 @@
 </head>
 <body>
 <div class="container pt-3">
-    <div class="row justify-content-center">
-        <form>
-            <select name="covers" class="custom-select">
-                <option selected>Select cover types</option>
-                <option value="volvo">Leather</option>
-                <option value="fiat">Fabric</option>
-                <option value="audi">Hard paper</option>
-                <option value="audi">Chinese style</option>
-            </select>
-        </form>
+    <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Create Your Diary!</h1>
+    </div>
+    <div class="d-flex justify-content-lg-between">
 
         <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
             <ol class="carousel-indicators">
@@ -28,58 +22,149 @@
                 <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
                 <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
             </ol>
-            <div class="carousel-inner">
+            <div class="carousel-inner min-vw-1200px min-vh-600px">
                 <div class="carousel-item active">
                     <img class="d-block w-100"
                          src="https://i.pinimg.com/564x/78/56/d2/7856d2cfcac03a4d3255155bcefbf949.jpg"
+                         max-width="800px" max-height="700x"
                          alt="First slide">
-                    <div class="carousel-caption">
-                        <h5>Leather cover</h5>
-                        <p>Add some elegency to your diary!!</p>
+                    <div class="container">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Leather cover</h5>
+                            <p>Add some elegency to your diary!!</p>
+                        </div>
                     </div>
+
                 </div>
-                <div class="carousel-item">
+                <div class="carousel-item min-vw-1200px min-vh-600px">
                     <img class="d-block w-100"
                          src="https://i.pinimg.com/originals/61/20/38/612038cf939345f416459894395f0cac.jpg"
+                         max-width="800px" max-height="700x"
                          alt="Second slide">
-                    <div class="carousel-caption">
+                    <div class="carousel-caption d-none d-md-block">
                         <h5>Fabric cover</h5>
                         <p>Add some elegency to your diary!!</p>
                     </div>
                 </div>
-                <div class="carousel-item">
+                <div class="carousel-item min-vw-1200px min-vh-600px">
                     <img class="d-block w-100"
                          src="https://ae01.alicdn.com/kf/HTB14B41aK6sK1RjSsrbq6xbDXXar.jpg_q50.jpg"
-                         alt="Third slide">
-                    <div class="carousel-caption">
+                         max-width="800px" max-height="700x"
+                         alt="Third slide"
+                    >
+                    <div class="carousel-caption d-none d-md-block">
                         <h5>Hard paper cover</h5>
                         <p>Add some elegency to your diary!!</p>
                     </div>
                 </div>
-                <div class="carousel-item">
+                <div class="carousel-item min-vw-1200px min-vh-600px">
                     <img class="d-block w-100"
                          src="https://i.pinimg.com/564x/19/76/4a/19764a4e6aa64704e66c89b088195ecd.jpg"
+                         max-width="800px" max-height="700x"
                          alt="Forth slide">
-                    <div class="carousel-caption">
+                    <div class="carousel-caption d-none d-md-block">
                         <h5>Chinese style cover</h5>
                         <p>Add some elegency to your diary!!</p>
                     </div>
                 </div>
             </div>
-            <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-                <span class="glyphicon glyphicon-chevron-left"></span>
+            <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="sr-only">Previous</span>
             </a>
-            <a class="right carousel-control" href="#myCarousel" data-slide="next">
-                <span class="glyphicon glyphicon-chevron-right"></span>
+            <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="sr-only">Next</span>
             </a>
         </div>
+
+        <!--            <div class="dropdown show ">-->
+        <!--                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuCover"-->
+        <!--                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--                    Select your diary cover:-->
+        <!--                </a>-->
+
+        <!--                <div class="dropdown-menu" aria-labelledby="dropdownMenuCover">-->
+        <!--                    <a class="dropdown-item" href="#">Leather</a>-->
+        <!--                    <a class="dropdown-item" href="#">Fabric</a>-->
+        <!--                    <a class="dropdown-item" href="#">Hard Paper</a>-->
+        <!--                    <a class="dropdown-item" href="#">Chinese style</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+
+        <!--            <div class="dropdown show">-->
+        <!--                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuPaperColour"-->
+        <!--                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--                    Select the paper colour:-->
+        <!--                </a>-->
+
+        <!--                <div class="dropdown-menu" aria-labelledby="dropdownMenuPaperColour">-->
+        <!--                    <a class="dropdown-item" href="#">White</a>-->
+        <!--                    <a class="dropdown-item" href="#">Grey</a>-->
+        <!--                    <a class="dropdown-item" href="#">Yellow</a>-->
+        <!--                    <a class="dropdown-item" href="#">Sheepskin</a>-->
+        <!--                    <a class="dropdown-item" href="#">Teal</a>-->
+        <!--                    <a class="dropdown-item" href="#">Green</a>-->
+        <!--                    <a class="dropdown-item" href="#">Pink</a>-->
+        <!--                    <a class="dropdown-item" href="#">Black</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+
+        <!--            <div class="dropdown show">-->
+        <!--                <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuPaperTypes"-->
+        <!--                   data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
+        <!--                    Select the paper type:-->
+        <!--                </a>-->
+
+        <!--                <div class="dropdown-menu" aria-labelledby="dropdownMenuPaperTypes">-->
+        <!--                    <a class="dropdown-item" href="#">Plain</a>-->
+        <!--                    <a class="dropdown-item" href="#">Dotted</a>-->
+        <!--                    <a class="dropdown-item" href="#">Lined</a>-->
+        <!--                    <a class="dropdown-item" href="#">Vertical lined</a>-->
+        <!--                </div>-->
+        <!--            </div>-->
+
+
+        <form class="d-flex flex-column">
+            <select name="covers" class="custom-select">
+                <option selected>Select cover types</option>
+                <option value="leather">Leather</option>
+                <option value="fabric">Fabric</option>
+                <option value="hardpaper">Hard paper</option>
+                <option value="chinese">Chinese style</option>
+            </select>
+
+            <select name="paperTypes" class="custom-select">
+                <option selected>Select paper types</option>
+                <option value="plain">Plain</option>
+                <option value="dotted">Dotted</option>
+                <option value="lined">Lined</option>
+                <option value="verticallined">Vertical lined</option>
+            </select>
+
+            <select name="PaperColours" class="custom-select">
+                <option selected>Select paper colour</option>
+                <option value="white">White</option>
+                <option value="grey">Gery</option>
+                <option value="pink">Pink</option>
+                <option value="green">Green</option>
+                <option value="birch">Birch</option>
+                <option value="sheepskin">Sheepskin</option>
+                <option value="yellow">Yellow</option>
+                <option value="teal">Teal</option>
+            </select>
+            <div class="form-group pt-3">
+                <label for="inputcovertext"> Customizable text on the cover: </label>
+                <input type="text" id="inputcovertext" class="form-text-lg" placeholder="Ash's Diary">
+            </div>
+            <button type="submit" class="btn btn-primary">Add to cart</button>
+
+        </form>
+
+
     </div>
 </div>
 <script>
-
-
 
 
 </script>
