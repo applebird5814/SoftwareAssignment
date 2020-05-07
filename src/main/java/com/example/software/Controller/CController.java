@@ -37,7 +37,7 @@ public class CController {
             return new Gson().toJson(new Response(false,"There's a cover with the same information!"));
         }
     }
-//aaa
+
     public String addPaperColor(@Valid PaperColor paperColor)
     {
         Boolean b = diaryService.addPaperColor(paperColor);

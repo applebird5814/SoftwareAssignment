@@ -126,46 +126,84 @@
 
 
         <form class="d-flex flex-column">
-            <select name="covers" class="custom-select">
-                <option selected>Select cover types</option>
-                <option value="leather">Leather</option>
-                <option value="fabric">Fabric</option>
-                <option value="hardpaper">Hard paper</option>
-                <option value="chinese">Chinese style</option>
-            </select>
+            <div class="form-group">
+                <select name="covers" class="custom-select" id="selectCover">
+                    <option selected>Select cover types</option>
+                    <option value="leather">Leather</option>
+                    <option value="fabric">Fabric</option>
+                    <option value="hardpaper">Hard paper</option>
+                    <option value="chinese">Chinese style</option>
+                </select>
+            </div>
 
-            <select name="paperTypes" class="custom-select">
-                <option selected>Select paper types</option>
-                <option value="plain">Plain</option>
-                <option value="dotted">Dotted</option>
-                <option value="lined">Lined</option>
-                <option value="verticallined">Vertical lined</option>
-            </select>
+            <div class="form-group">
+                <select name="paperTypes" class="custom-select" id="selectPaper">
+                    <option selected>Select paper types</option>
+                    <option value="plain">Plain</option>
+                    <option value="dotted">Dotted</option>
+                    <option value="lined">Lined</option>
+                    <option value="verticallined">Vertical lined</option>
+                </select>
+            </div>
 
-            <select name="PaperColours" class="custom-select">
-                <option selected>Select paper colour</option>
-                <option value="white">White</option>
-                <option value="grey">Gery</option>
-                <option value="pink">Pink</option>
-                <option value="green">Green</option>
-                <option value="birch">Birch</option>
-                <option value="sheepskin">Sheepskin</option>
-                <option value="yellow">Yellow</option>
-                <option value="teal">Teal</option>
-            </select>
+            <div class="form-group">
+                <select name="PaperColours" class="custom-select" id="selectColour">
+                    <option selected>Select paper colour</option>
+                    <option value="white">White</option>
+                    <option value="grey">Gery</option>
+                    <option value="pink">Pink</option>
+                    <option value="green">Green</option>
+                    <option value="birch">Birch</option>
+                    <option value="sheepskin">Sheepskin</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="teal">Teal</option>
+                </select>
+            </div>
+
             <div class="form-group pt-3">
                 <label for="inputcovertext"> Customizable text on the cover: </label>
                 <input type="text" id="inputcovertext" class="form-text-lg" placeholder="Ash's Diary">
             </div>
-            <button type="submit" class="btn btn-primary">Add to cart</button>
+            <button type="submit" class="btn btn-primary" onclick="submit()">Add to cart</button>
 
         </form>
-
+        <div>
+            <button type="button" class="btn btn-secondary" onclick="toCart()">Trolley</button>
+        </div>
 
     </div>
 </div>
 <script>
+    function toCart() {
+        window.location.href = "Cart"
+        // left for future development
+    }
 
+    function submit() {
+        var coverName = document.getElementById("selectCover").value;
+        var PaperColorName = document.getElementById("selectColour").value;
+        var TypeOfPaper = document.getElementById("selectPaper").value;
+        var json = JSON.stringify({
+            coverName: "coverName",
+            PaperColorName: "PaperColorName",
+            TypeOfPaper: "TypeOfPaper"
+        });
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '',
+            contentType: "application/json",
+            data: json,
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
 
 </script>
 </body>
