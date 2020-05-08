@@ -184,9 +184,9 @@
         var PaperColorName = document.getElementById("selectColour").value;
         var TypeOfPaper = document.getElementById("selectPaper").value;
         var json = JSON.stringify({
-            coverName: "coverName",
-            PaperColorName: "PaperColorName",
-            TypeOfPaper: "TypeOfPaper"
+            "coverName": coverName,
+            "PaperColorName": PaperColorName,
+            "TypeOfPaper": TypeOfPaper
         });
 
         $.ajax({
