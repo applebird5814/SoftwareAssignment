@@ -62,4 +62,10 @@ public class MainController {
     {
         return "AdminLogin";
     }
+
+    @RequestMapping("/Customization")
+    public String Customization()
+    {
+        return "Customization";
+    }
 }
