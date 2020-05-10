@@ -161,7 +161,7 @@
             </div>
 
             <div class="form-group pt-3">
-                <label for="inputcovertext"> Customizable text on the cover: </label>
+                <label for="inputcovertext"> Customizable text on the cover (Max 20 characters): </label>
                 <input type="text" id="inputcovertext" class="form-text-lg" placeholder="Ash's Diary">
             </div>
             <button type="submit" class="btn btn-primary" onclick="submit()">Add to cart</button>
@@ -187,7 +187,7 @@
             "coverName": coverName,
             "PaperColorName": PaperColorName,
             "TypeOfPaper": TypeOfPaper
-        });
+        });// still need customizable text in controller and DAO
 
         $.ajax({
             type: "POST",
