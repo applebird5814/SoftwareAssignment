@@ -120,7 +120,7 @@ public class AdminController {
     @RequestMapping("/addUser")
     public String addUser(@RequestBody @Valid User user, BindingResult result)
     {
-        //添加所有user账户和admin账户
+        //添加user账户
         //前端提供添加管理员功能以及删除用户功能
 
         //添加用户

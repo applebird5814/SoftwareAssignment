@@ -24,6 +24,8 @@ public class UserServiceImpl implements UserService {
         return userDao.findByUsername(username).get();
     }
 
+
+
     @Override
     public boolean createUser(User user) {
         if(userDao.findByUsername(user.getUsername()).isPresent())
