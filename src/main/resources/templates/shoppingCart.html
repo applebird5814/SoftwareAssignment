@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
+    <title>ShoppingCart</title>
+</head>
+<body>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">全部商品：</div>
+        </div>
+        <div class="row">
+            <div class="col-md-2">编号</div>
+            <div class="col-md-6">商品</div>
+            <div class="col-md-4">操作</div>
+        </div>
+        <div class="row">
+            <input type="hidden" id="products" th:value="${Products}"/>
+            <div class="col-md-12" id="listMain"></div>
+            <script>
+                var products=$.parseJSON(document.getElementById("products").value);
+                if(products.length==0)
+                {
+                    $("#listMain").append("<p>Sorry, Your shopping cart is empty!</p>");
+                }
+                else{
+                    for(var i=0;i<products.length;i++)
+                    {
+                        var single = "";
+                        $("#listMain").append(single);
+                    }
+                }
+            </script>
+        </div>
+        <div class="row">
+            <div class="col-md-8"></div>
+            <div class="col-md-4">去结算</div>
+        </div>
+    </div>
+</body>
+</html>

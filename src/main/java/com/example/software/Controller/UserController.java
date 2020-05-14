@@ -1,5 +1,6 @@
 package com.example.software.Controller;
 
+import com.example.software.Entity.Comment;
 import com.example.software.Entity.Response;
 import com.example.software.Entity.User;
 import com.example.software.Service.DiaryService;
@@ -32,6 +33,8 @@ public class UserController {
     @Autowired
     @Qualifier("diaryServiceImpl")
     DiaryService diaryService;
+
+
 
     @ResponseBody
     @RequestMapping("/login")

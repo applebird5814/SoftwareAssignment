@@ -8,6 +8,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
 
 
+    @RequestMapping("/shoppingCart")
+    public String shoppingCart(){
+        return "shoppingCart";
+    }
+
     @RequestMapping("/*")
     @ResponseBody
     public String HelloWorld()
