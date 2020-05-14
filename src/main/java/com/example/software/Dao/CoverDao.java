@@ -8,6 +8,6 @@ import java.util.Optional;
 
 public interface CoverDao extends JpaRepository<Cover,String> {
     Optional<Cover> findCoverByCoverName(String coverName);
-    void deleteCoverByCoverName(String coverName);
-
+    Optional<Cover> findCoverById(String id);
+    void deleteById(String id);
 }

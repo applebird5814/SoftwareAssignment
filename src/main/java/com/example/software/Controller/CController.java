@@ -9,11 +9,15 @@ import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.validation.Valid;
+import java.util.List;
 
+@RequestMapping("/cover")
 @Controller
 public class CController {
     @Autowired
@@ -25,7 +29,11 @@ public class CController {
     public String a() {
         return "test1";
     }
-    public String addCover(@Valid Cover cover)
+
+
+    @ResponseBody
+    @RequestMapping("/addCover")
+    public String addCover(@RequestBody @Valid Cover cover)
     {
         Boolean b = diaryService.addCover(cover);
         if(b)
@@ -38,7 +46,9 @@ public class CController {
         }
     }
 
-    public String addPaperColor(@Valid PaperColor paperColor)
+    @ResponseBody
+    @RequestMapping("/addPaperColorName")
+    public String addPaperColor(@RequestBody @Valid PaperColor paperColor)
     {
         Boolean b = diaryService.addPaperColor(paperColor);
         if(b)
@@ -51,7 +61,9 @@ public class CController {
         }
     }
 
-    public String addTypeOfPaper(@Valid TypeOfPaper typeOfPaper)
+    @ResponseBody
+    @RequestMapping("/addTypeOfPaper")
+    public String addTypeOfPaper(@RequestBody @Valid TypeOfPaper typeOfPaper)
     {
         Boolean b = diaryService.addTypeOfPaper(typeOfPaper);
         if(b)
@@ -64,9 +76,14 @@ public class CController {
         }
     }
 
-    public String deleteCover(@Valid Cover cover)
+
+    @ResponseBody
+    @RequestMapping("/deleteCoverName")
+    public String deleteCover(@RequestBody @Valid String id)
     {
-        Boolean b = diaryService.deleteCover(cover);
+
+        Boolean b = diaryService.deleteCover(id);
+        System.out.println(b);
         if(b)
         {
             return new Gson().toJson(new Response(true,"delete cover success"));
@@ -77,9 +94,13 @@ public class CController {
         }
     }
 
-    public String deletePaperColor(@Valid PaperColor paperColor)
+
+
+    @ResponseBody
+    @RequestMapping("/deletePaperColorName")
+    public String deletePaperColor(@RequestBody @Valid String id)
     {
-        Boolean b = diaryService.deletePaperColor(paperColor);
+        Boolean b = diaryService.deletePaperColor(id);
         if(b)
         {
             return new Gson().toJson(new Response(true,"delete paperColor success"));
@@ -90,9 +111,12 @@ public class CController {
         }
     }
 
-    public String deleteTypeOfPaper(@Valid TypeOfPaper typeOfPaper)
+
+    @RequestMapping("deleteTypeofPaper")
+@ResponseBody
+    public String deleteTypeOfPaper(@RequestBody @Valid String id)
     {
-        Boolean b = diaryService.deleteTypeOfPaper(typeOfPaper);
+        Boolean b = diaryService.deleteTypeOfPaper(id);
         if(b)
         {
             return new Gson().toJson(new Response(true,"delete typeOfPaper success"));
@@ -101,5 +125,13 @@ public class CController {
         {
             return new Gson().toJson(new Response(false,"There's no typeOfPaper with the same information!"));
         }
+    }
+
+    @RequestMapping("/testjsp")
+    public String showcover(Model model) {
+        List<Cover> showcover = diaryService.getCovers();//加这行，调用Service层的业务
+        model.addAttribute("showcover", showcover);//加这行，传个list到前端
+        System.out.println(showcover.toArray());
+        return "test1";
     }
 }

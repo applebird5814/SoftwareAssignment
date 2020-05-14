@@ -10,6 +10,8 @@ import com.example.software.Entity.DiaryDetail.TypeOfPaper;
 import com.example.software.Service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
 
@@ -49,30 +51,47 @@ public class DiaryServiceImpl implements DiaryService {
         return true;
     }
 
-    @Override
-    public boolean deleteCover(Cover cover) {
+     @Override
+    public boolean deleteCover(String id) {
+         System.out.println(id);
+         System.out.println(coverDao.findCoverByCoverName("111").isPresent());
+         System.out.println(coverDao.findCoverById(id).isPresent());
+         System.out.println(coverDao.findCoverById(id).toString());
+        if(coverDao.findCoverById(id).isPresent())
+        {
+            coverDao.deleteById(id);
+            coverDao.flush();
+            return true;
+        }
+        return false;
+    }
+    public boolean deleteCover1(Cover cover) {
+        System.out.println(cover.getCoverName());
+        System.out.println(cover.getId());
+        System.out.println("test"+coverDao.findCoverByCoverName(cover.getCoverName()).isPresent());
         if(coverDao.findCoverByCoverName(cover.getCoverName()).isPresent())
         {
-            coverDao.deleteInBatch((Iterable<Cover>) cover);
+            coverDao.deleteById(cover.getId());
             coverDao.flush();
             return true;
         }
         return false;
     }
 
-    public boolean addPaperColor(PaperColor paperColor) {
-        if(paperColorDao.findPaperColorByColor(paperColor.getColor()).isPresent())
+    public boolean addPaperColor(PaperColor color) {
+        if(paperColorDao.findPaperColorByColor(color.getColor()).isPresent())
         {
             return false;
         }
-        paperColorDao.saveAndFlush(paperColor);
+        paperColorDao.saveAndFlush(color);
         return true;
     }
 
-    public boolean deletePaperColor(PaperColor paperColor) {
-        if(paperColorDao.findPaperColorByColor(paperColor.getColor()).isPresent())
+    public boolean deletePaperColor(String id) {
+        if(paperColorDao.findPaperColorById(id).isPresent())
         {
-            paperColorDao.deleteInBatch((Iterable<PaperColor>) paperColor);
+            System.out.println(id);
+            paperColorDao.deleteById(id);
             paperColorDao.flush();
             return true;
         }
@@ -84,17 +103,22 @@ public class DiaryServiceImpl implements DiaryService {
         {
             return false;
         }
+        System.out.println(typeOfPaper.getId());
+        System.out.println(typeOfPaper.getTypeOfPaper());
         typeOfPaperDao.saveAndFlush(typeOfPaper);
         return true;
     }
 
-    public boolean deleteTypeOfPaper(TypeOfPaper typeOfPaper) {
-        if(typeOfPaperDao.findTypeOfPaperByTypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent())
-        {
-            typeOfPaperDao.deleteInBatch((Iterable<TypeOfPaper>) typeOfPaper);
+    public boolean deleteTypeOfPaper(String id) {
+        if (typeOfPaperDao.findTypeOfPaperById(id).isPresent()) {
+            System.out.println(id);
+            typeOfPaperDao.deleteById(id);
             typeOfPaperDao.flush();
             return true;
         }
         return false;
     }
+
+
+
 }

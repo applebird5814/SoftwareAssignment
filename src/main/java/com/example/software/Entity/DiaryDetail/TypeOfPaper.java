@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class TypeOfPaper {
     @Id
     private String id;
-    @NotNull
+ //   @NotNull
     private String typeOfPaper;
 
     public String getId() {
