@@ -80,4 +80,10 @@ public class MainController {
     {
         return "test1";
     }
+
+    @RequestMapping("/EditAddress")
+    public String EditAddress()
+    {
+        return "EditAddress";
+    }
 }
