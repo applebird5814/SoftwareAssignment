@@ -1,27 +1,29 @@
 package com.example.software.Entity;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.validation.constraints.NotNull;
 
 @Entity
 public class Diary {
     @Id
-    private String id;
+    @GeneratedValue
+    private int id;
     @NotNull
     private String paperColor;
     @NotNull
     private String cover;
     @NotNull
     private String typeOfPaper;
-    @NotNull
+
     private String customizableText;
 
-    public String getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(int id) {
         this.id = id;
     }
 

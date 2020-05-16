@@ -21,10 +21,13 @@ public class OrderController {
     @Qualifier("orderServiceImpl")
     OrderService orderService;
 
+    @ResponseBody
     @RequestMapping("/addDiary")
-    public String addDiary(Model model){
+    public String addDiary(Model model, @RequestBody Diary diary){
         //添加各种选项的值
         //返回页面
+        System.out.println("Data");
+        System.out.println(diary);
         return "addDiary";
     }
 

@@ -68,16 +68,16 @@ public class MainController {
         return "AdminLogin";
     }
 
-    @RequestMapping("/Customization")
+    @RequestMapping("/BuyDiary")
     public String Customization()
     {
-        return "Customization";
+        return "BuyDiary";
     }
 
 
     @RequestMapping("/test1")
     public String test1()
     {
-        return "test1";
+        return "EditDiary";
     }
 }

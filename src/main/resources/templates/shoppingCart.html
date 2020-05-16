@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
     <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
-    <title>ShoppingCart</title>
+    <title>Shopping Cart</title>
 </head>
 <body>
     <div class="container">
@@ -18,6 +18,12 @@
             <div class="col-md-6">商品</div>
             <div class="col-md-4">操作</div>
         </div>
+
+        <div class = row>
+
+
+        </div>
+
         <div class="row">
             <input type="hidden" id="products" th:value="${Products}"/>
             <div class="col-md-12" id="listMain"></div>
@@ -25,7 +31,7 @@
                 var products=$.parseJSON(document.getElementById("products").value);
                 if(products.length==0)
                 {
-                    $("#listMain").append("<p>Sorry, Your shopping cart is empty!</p>");
+                    $("#listMain").append("<p>Your shopping cart is empty! Go buy some!</p>");
                 }
                 else{
                     for(var i=0;i<products.length;i++)

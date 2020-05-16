@@ -132,6 +132,6 @@ public class CController {
         List<Cover> showcover = diaryService.getCovers();//加这行，调用Service层的业务
         model.addAttribute("showcover", showcover);//加这行，传个list到前端
         System.out.println(showcover.toArray());
-        return "test1";
+        return "EditDiary";
     }
 }

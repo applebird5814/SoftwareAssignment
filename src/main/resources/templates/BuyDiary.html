@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
+    <title>Customize your diary!</title>
+</head>
+<body>
+<div class="container pt-3">
+
+    <div class="text-center mb-4">
+        <h1 class="h3 mb-3 font-weight-normal">Create Your Diary!</h1>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8">
+            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                <ol class="carousel-indicators">
+                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>
+                    <li data-target="#carouselExampleIndicators" data-slide-to="3"></li>
+                </ol>
+                <div class="carousel-inner min-vw-1200px min-vh-600px">
+                    <div class="carousel-item active">
+                        <img class="d-block w-100"
+                             src="https://i.pinimg.com/564x/78/56/d2/7856d2cfcac03a4d3255155bcefbf949.jpg"
+                             max-width="800px" max-height="700x"
+                             alt="First slide">
+                        <div class="container">
+                            <div class="carousel-caption d-none d-md-block">
+                                <h5>Leather cover</h5>
+                                <p>Add some elegency to your diary!!</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="carousel-item min-vw-1200px min-vh-600px">
+                        <img class="d-block w-100"
+                             src="https://i.pinimg.com/originals/61/20/38/612038cf939345f416459894395f0cac.jpg"
+                             max-width="800px" max-height="700x"
+                             alt="Second slide">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Fabric cover</h5>
+                            <p>Add some elegency to your diary!!</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item min-vw-1200px min-vh-600px">
+                        <img class="d-block w-100"
+                             src="https://ae01.alicdn.com/kf/HTB14B41aK6sK1RjSsrbq6xbDXXar.jpg_q50.jpg"
+                             max-width="800px" max-height="700x"
+                             alt="Third slide"
+                        >
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Hard paper cover</h5>
+                            <p>Add some elegency to your diary!!</p>
+                        </div>
+                    </div>
+                    <div class="carousel-item min-vw-1200px min-vh-600px">
+                        <img class="d-block w-100"
+                             src="https://i.pinimg.com/564x/19/76/4a/19764a4e6aa64704e66c89b088195ecd.jpg"
+                             max-width="800px" max-height="700x"
+                             alt="Forth slide">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>Chinese style cover</h5>
+                            <p>Add some elegency to your diary!!</p>
+                        </div>
+                    </div>
+                </div>
+                <a class="carousel-control-prev" href="#carouselExampleControls" role="button" data-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Previous</span>
+                </a>
+                <a class="carousel-control-next" href="#carouselExampleControls" role="button" data-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="sr-only">Next</span>
+                </a>
+            </div>
+        </div>
+        <div class="col-sm-4">
+            <div class="form-group">
+                <select name="covers" class="custom-select" id="selectCover">
+                    <option selected>Select cover types</option>
+                    <option value="leather">Leather</option>
+                    <option value="fabric">Fabric</option>
+                    <option value="hardpaper">Hard paper</option>
+                    <option value="chinese">Chinese style</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select name="paperTypes" class="custom-select" id="selectPaper">
+                    <option selected>Select paper types</option>
+                    <option value="plain">Plain</option>
+                    <option value="dotted">Dotted</option>
+                    <option value="lined">Lined</option>
+                    <option value="verticallined">Vertical lined</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <select name="PaperColours" class="custom-select" id="selectColour">
+                    <option selected>Select paper colour</option>
+                    <option value="white">White</option>
+                    <option value="grey">Gery</option>
+                    <option value="pink">Pink</option>
+                    <option value="green">Green</option>
+                    <option value="birch">Birch</option>
+                    <option value="sheepskin">Sheepskin</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="teal">Teal</option>
+                </select>
+            </div>
+
+            <div class="form-group pt-3">
+                <label for="inputcovertext"> Customizable text on the cover : </label>
+                <textarea id="inputcovertext" class="form-control" placeholder="Max 20 characters"></textarea>
+            </div>
+
+            <div class="form-group pt-1">
+                <button type="btn" class="btn btn-primary btn-block " onclick="submit()">Add to cart</button>
+            </div>
+
+
+            <div class="form-group pt-1">
+                <button type="button" class="btn btn-secondary btn-block " onclick="toCart()">Trolley</button>
+            </div>
+        </div>
+
+    </div>
+</div>
+<script>
+    function toCart() {
+        window.location.href = "shoppingCart"
+    }
+
+    function submit() {
+        var cover = document.getElementById("selectCover").value;
+        var paperColor = document.getElementById("selectColour").value;
+        var typeOfPaper = document.getElementById("selectPaper").value;
+        var customizableText = document.getElementById("inputcovertext").value
+        var json = JSON.stringify({
+            "cover": cover,
+            "paperColor": paperColor,
+            "typeOfPaper": typeOfPaper,
+            "customizableText": customizableText
+        });
+        console.log(json);
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: 'order/addDiary',
+            contentType: "application/json",
+            data: json,
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+</script>
+</body>
+</html>
