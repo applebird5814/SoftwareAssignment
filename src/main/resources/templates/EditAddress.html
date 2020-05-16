@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
+    <title>EditAddress</title>
+</head>
+<body>
+
+<div>
+    <div class="container">
+        <div class="row justify-content-center">
+            <form class="form-signIn">
+                <div class="text-center mb-4">
+                    <h1 class="h3 mb-3 font-weight-normal">create address(set userId = "1" for testing)</h1>
+                </div>
+
+                <div class="form-label-group">
+                    <label for="inputAddress">Address</label>
+                    <input type="text" name="address" id="inputAddress" class="form-control" placeholder="Address" required autofocus>
+                </div><br>
+                <div class="form-label-group">
+                    <label>Post Code</label><br>
+                    <input type="text" name="postcode" id="inputPostcode" placeholder="Post Code">
+                </div><br>
+                <div class="form-label-group">
+                    <label>State</label><br>
+                    <input type="text" name="state" id="inputState" placeholder="State">
+                </div><br>
+                <div class="form-label-group">
+                    <label>Urban</label><br>
+                    <input type="text" name="urban" id="inputUrban" placeholder="Urban">
+                </div><br>
+                <p>testing create user address, set userId = "1"</p>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="createAddress()">test create</button>
+                <p>testing delete user address, set userId = "1"</p>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="deleteAddress()">test delete</button>
+                <p>testing update user address, set userId = "1"</p>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="updateAddress()">test update</button>
+            </form>
+
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function createAddress() {
+        var address = document.getElementById("inputAddress").value;
+        var postCode = document.getElementById("inputPostcode").value;
+        var state = document.getElementById("inputState").value;
+        var urban = document.getElementById("inputUrban").value;
+        var id = new Date().getTime().toString();
+        var userId = "1"; //for testing
+        var json = JSON.stringify({
+            "id" : id,
+            "userId" : userId,
+            "address": address,
+            "postCode": postCode,
+            "state": state,
+            "urban": urban,
+        });
+
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/address/createAddress',
+            contentType: "application/json",
+            data: json,
+            success:function (data) {
+
+                if(data.success)
+                {
+                    alert(data.message);
+                    //window.location.href='/homePage';
+                }
+                else
+                {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+    function deleteAddress() {
+        var address = document.getElementById("inputAddress").value;
+        var postCode = document.getElementById("inputPostcode").value;
+        var state = document.getElementById("inputState").value;
+        var urban = document.getElementById("inputUrban").value;
+        var id = new Date().getTime().toString();
+        var userId = "1"; //for testing
+        var json = JSON.stringify({
+            "id" : id,
+            "userId" : userId,
+            "address": address,
+            "postCode": postCode,
+            "state": state,
+            "urban": urban,
+        });
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/address/deleteAddress',
+            contentType: "application/json",
+            data: json,
+            success:function (data) {
+
+                if(data.success)
+                {
+                    alert(data.message);
+                    //window.location.href='/homePage';
+                }
+                else
+                {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+
+    function updateAddress() {
+        var address = document.getElementById("inputAddress").value;
+        var postCode = document.getElementById("inputPostcode").value;
+        var state = document.getElementById("inputState").value;
+        var urban = document.getElementById("inputUrban").value;
+        var id = new Date().getTime().toString();
+        var userId = "1"; //for testing
+        var json = JSON.stringify({
+            "id" : id,
+            "userId" : userId,
+            "address": address,
+            "postCode": postCode,
+            "state": state,
+            "urban": urban,
+        });
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/address/updateAddress',
+            contentType: "application/json",
+            data: json,
+            success:function (data) {
+
+                if(data.success)
+                {
+                    alert(data.message);
+                    //window.location.href='/homePage';
+                }
+                else
+                {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>
