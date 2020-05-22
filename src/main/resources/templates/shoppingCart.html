@@ -3,49 +3,61 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css"/>
     <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
     <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
     <title>Shopping Cart</title>
 </head>
 <body>
-    <div class="container">
-        <div class="row">
-            <div class="col-md-12">全部商品：</div>
-        </div>
-        <div class="row">
-            <div class="col-md-2">编号</div>
-            <div class="col-md-6">商品</div>
-            <div class="col-md-4">操作</div>
-        </div>
-
-        <div class = row>
-
-
-        </div>
-
-        <div class="row">
-            <input type="hidden" id="products" th:value="${Products}"/>
-            <div class="col-md-12" id="listMain"></div>
-            <script>
-                var products=$.parseJSON(document.getElementById("products").value);
-                if(products.length==0)
-                {
-                    $("#listMain").append("<p>Your shopping cart is empty! Go buy some!</p>");
-                }
-                else{
-                    for(var i=0;i<products.length;i++)
-                    {
-                        var single = "";
-                        $("#listMain").append(single);
-                    }
-                }
-            </script>
-        </div>
-        <div class="row">
-            <div class="col-md-8"></div>
-            <div class="col-md-4">去结算</div>
-        </div>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">全部商品：</div>
     </div>
+    <div class="row">
+        <div class="col-md-2">编号</div>
+        <div class="col-md-6">商品</div>
+        <div class="col-md-4">操作</div>
+    </div>
+
+    <div class=row id="listMain">
+
+    </div>
+
+    <div class="row">
+        <input type="hidden" id="products" th:value="${Products}"/>
+
+        <script>
+            var products = $.parseJSON(document.getElementById("products").value);
+            if (products.length == 0) {
+                $("#listMain").append("<p>Your shopping cart is empty! Go buy some!</p>");
+            } else {
+                for (var i = 0; i < products.length; i++) {
+                    var single = " <div class=\"col-md-3\">\n" +
+                        "            <label for=\"coverType\"> Cover type: </label>\n" +
+                        "            <div class=\"col-md-3\" id=\"coverType\">" + products[i].coverType + "</div>\n" +
+                        "        </div>\n" +
+                        "        <div class=\"col-md-3\">\n" +
+                        "            <label for=\"paperType\">Paper type:</label>\n" +
+                        "            <div class=\"col-md-3\" id=\"paperType\">" + products[i].paperType + "</div>\n" +
+                        "\n" +
+                        "        </div>\n" +
+                        "        <div class=\"col-md-3\">\n" +
+                        "            <label for=\"paperColor\">Paper color:</label>\n" +
+                        "            <div class=\"col-md-3\" id=\"paperColor\">" + products[i].paperColor + "</div>\n" +
+                        "        </div>\n" +
+                        "        <div class=\"col-md-3\">\n" +
+                        "            <label for=\"customizableText\">Customizable text:</label>\n" +
+                        "            <div class=\"col-md-3\" id=\"customizableText\">" + products[i].customizableText + "</div>\n" +
+                        "        </div>";
+                    $("#listMain").append(single);
+                }
+            }
+        </script>
+    </div>
+    <div class="row">
+        <div class="col-md-8"></div>
+        <div class="col-md-4">去结算</div>
+    </div>
+</div>
 </body>
 </html>

@@ -86,4 +86,10 @@ public class MainController {
     {
         return "EditAddress";
     }
+
+    @RequestMapping("/AddAddress")
+    public String AddAddress()
+    {
+        return "AddAddress";
+    }
 }

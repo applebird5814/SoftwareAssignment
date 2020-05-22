@@ -15,11 +15,8 @@
         <div class="row justify-content-center">
             <form class="form-signIn">
                 <div class="text-center mb-4">
-                    <h1 class="h3 mb-3 font-weight-normal">Manage your address</h1>
-                    <h2 class="h3 mb-3 font-weight-normal">This is your current address:</h2>
-                    <h2 class="h3 mb-3 font-weight-normal">需要从后台提取数据填入下表</h2>
+                    <h1 class="h3 mb-3 font-weight-normal">create address(set userId = "1" for testing)</h1>
                 </div>
-
 
                 <div class="form-label-group">
                     <label for="inputAddress">Address</label>
@@ -36,11 +33,13 @@
                 <div class="form-label-group">
                     <label>Urban</label><br>
                     <input type="text" name="urban" id="inputUrban" class="form-control" placeholder="e.g southbank">
-                </div>
-                <h3 class="h3 mb-3 font-weight-normal">Operations:</h3>
-                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="toAddAddress()">Add a new address!</button>
-                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="deleteAddress()">Delete this address</button>
-                <button class="btn btn-lg btn-secondary btn-block" type="button" onclick="updateAddress()">Update this address</button>
+                </div><br>
+                <p>testing create user address, set userId = "1"</p>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="createAddress()">Add a new address!</button>
+                <p>testing delete user address, set userId = "1"</p>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="deleteAddress()">test delete</button>
+                <p>testing update user address, set userId = "1"</p>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="updateAddress()">Update </button>
             </form>
 
 
@@ -49,9 +48,42 @@
 </div>
 
 <script>
-    function toAddAddress() {
-        window.location.href = "AddAddress"
+    function createAddress() {
+        var address = document.getElementById("inputAddress").value;
+        var postCode = document.getElementById("inputPostcode").value;
+        var state = document.getElementById("inputState").value;
+        var urban = document.getElementById("inputUrban").value;
+        var id = new Date().getTime().toString();
+        var userId = "1"; //for testing
+        var json = JSON.stringify({
+            "id" : id,
+            "userId" : userId,
+            "address": address,
+            "postCode": postCode,
+            "state": state,
+            "urban": urban,
+        });
 
+
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/address/createAddress',
+            contentType: "application/json",
+            data: json,
+            success:function (data) {
+
+                if(data.success)
+                {
+                    alert(data.message);
+                    //window.location.href='/homePage';
+                }
+                else
+                {
+                    alert(data.message);
+                }
+            }
+        });
     }
 
     function deleteAddress() {
