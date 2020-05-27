@@ -58,12 +58,6 @@ public class MainController {
     }
 
 
-    @RequestMapping("/test1")
-    public String test1()
-    {
-        return "EditDiaryOption";
-    }
-
     @RequestMapping("/EditAddress")
     public String EditAddress()
     {
