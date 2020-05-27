@@ -16,7 +16,6 @@ public interface DiaryService {
 
     boolean addCover(Cover cover);
     boolean deleteCover(String id);
-    boolean deleteCover1(Cover cover);
 
     boolean addPaperColor(PaperColor color);
     boolean deletePaperColor(String id);

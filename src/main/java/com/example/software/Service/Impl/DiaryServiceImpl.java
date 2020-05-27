@@ -51,7 +51,7 @@ public class DiaryServiceImpl implements DiaryService {
         return true;
     }
 
-     @Override
+    @Override
     public boolean deleteCover(String id) {
          System.out.println(id);
          System.out.println(coverDao.findCoverByCoverName("111").isPresent());
@@ -65,19 +65,9 @@ public class DiaryServiceImpl implements DiaryService {
         }
         return false;
     }
-    public boolean deleteCover1(Cover cover) {
-        System.out.println(cover.getCoverName());
-        System.out.println(cover.getId());
-        System.out.println("test"+coverDao.findCoverByCoverName(cover.getCoverName()).isPresent());
-        if(coverDao.findCoverByCoverName(cover.getCoverName()).isPresent())
-        {
-            coverDao.deleteById(cover.getId());
-            coverDao.flush();
-            return true;
-        }
-        return false;
-    }
 
+
+    @Override
     public boolean addPaperColor(PaperColor color) {
         if(paperColorDao.findPaperColorByColor(color.getColor()).isPresent())
         {
@@ -87,6 +77,7 @@ public class DiaryServiceImpl implements DiaryService {
         return true;
     }
 
+    @Override
     public boolean deletePaperColor(String id) {
         if(paperColorDao.findPaperColorById(id).isPresent())
         {
@@ -98,6 +89,7 @@ public class DiaryServiceImpl implements DiaryService {
         return false;
     }
 
+    @Override
     public boolean addTypeOfPaper(TypeOfPaper typeOfPaper) {
         if(typeOfPaperDao.findTypeOfPaperByTypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent())
         {
@@ -109,6 +101,7 @@ public class DiaryServiceImpl implements DiaryService {
         return true;
     }
 
+    @Override
     public boolean deleteTypeOfPaper(String id) {
         if (typeOfPaperDao.findTypeOfPaperById(id).isPresent()) {
             System.out.println(id);

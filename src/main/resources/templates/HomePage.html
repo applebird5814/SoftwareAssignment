@@ -10,10 +10,14 @@
 </head>
 <body>
     HomePage
-    <button class="btn btn-lg btn-primary btn-block" type="button" onclick="logout()">Log Out</button>
+    <br>
+    <a href="/user/viewDiary">去购物</a>
+    <br>
+    <a href="/order/shoppingCart">查看购物车</a>
+    <br>
+    <button class="btn btn-lg" type="button" onclick="logout()">Log Out</button>
 
     <script>
-        console.log(document.cookie);
         function logout() {
             $.ajax({
                 type: "POST",

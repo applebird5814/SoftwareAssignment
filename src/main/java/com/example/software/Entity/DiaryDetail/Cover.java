@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class Cover {
     @Id
     private String id;
-    //@NotNull
+    @NotNull
     private String coverName;
 
     public String getId() {

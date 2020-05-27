@@ -61,7 +61,7 @@ public class MainController {
     @RequestMapping("/test1")
     public String test1()
     {
-        return "EditDiary";
+        return "EditDiaryOption";
     }
 
     @RequestMapping("/EditAddress")
