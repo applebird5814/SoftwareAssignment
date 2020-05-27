@@ -50,11 +50,7 @@ public class MainController {
         return "editOrder";
     }
 
-    @RequestMapping("/AdminRegister")
-    public String AdminRegister()
-    {
-        return "AdminRegister";
-    }
+
 
     @RequestMapping("/AddAddressAndDeliverOption")
     public String AddAddressAndDeliverOption()
@@ -62,11 +58,6 @@ public class MainController {
         return "AddAddressAndDeliverOption";
     }
 
-    @RequestMapping("/AdminLogin")
-    public String AdminLogin()
-    {
-        return "AdminLogin";
-    }
 
     @RequestMapping("/BuyDiary")
     public String Customization()

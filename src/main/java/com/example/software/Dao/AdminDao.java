@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdminDao extends JpaRepository<Admin,String> {
-    List<Admin> findByUsernameAndPassword(String username,String password);
+    Optional<Admin> findByUsernameAndPassword(String username,String password);
 
     Optional<Admin> findById(String id);
 

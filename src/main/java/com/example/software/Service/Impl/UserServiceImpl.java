@@ -7,6 +7,9 @@ import com.example.software.Service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+import java.util.Optional;
+
 
 @Service("userServiceImpl")
 public class UserServiceImpl implements UserService {
@@ -47,12 +50,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean loginValidation(String username, String password) {
-        if(!userDao.findByUsernameAndPassword(username,password).isEmpty())
-        {
-            return true;
-        }
-        return false;
+    public Optional<User> login(String username, String password) {
+        return userDao.findByUsernameAndPassword(username,password);
+    }
+
+    @Override
+    public List<User> findAll() {
+        return userDao.findAll();
     }
 
 }

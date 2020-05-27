@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
+    <title>Manage Account</title>
+</head>
+<body>
+    <input type="hidden" id="admin" th:value="${Admin}"/>
+    <input type="hidden" id="user" th:value="${User}"/>
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6" id="adminList"></div>
+            <div class="col-md-6" id="userList"></div>
+        </div>
+    </div>
+    <script>
+        var admin=$.parseJSON(document.getElementById("admin").value);
+        var user=$.parseJSON(document.getElementById("user").value);
+        console.log(admin);
+        console.log(user);
+        var adminSum = "";
+        for(var i=0;i<admin.length;i++){
+            var single =
+                "   <div class=\"row\">\n" +
+                "        <div class=\"col-md-9\">"+admin[i].username+"</div>\n" +
+                "        <div class=\"col-md-3\">\n" +
+                "            <a href=\"/admin/deleteAdmin?id="+admin[i].id+"\">删除该账号</a>\n" +
+                "        </div>\n" +
+                "    </div>";
+            var adminSum = adminSum + single;
+        }
+        document.getElementById("adminList").innerHTML=adminSum;
+        var userSum = "";
+        for(var i=0;i<user.length;i++){
+            var single =
+                "   <div class=\"row\">\n" +
+                "        <div class=\"col-md-9\">"+user[i].username+"</div>\n" +
+            "        <div class=\"col-md-3\">\n" +
+            "            <a href=\"/admin/deleteUser?id="+user[i].id+"\">删除该账号</a>\n" +
+            "        </div>\n" +
+            "    </div>";
+            var userSum = userSum + single;
+        }
+        document.getElementById("userList").innerHTML=userSum;
+
+    </script>
+
+</body>
+</html>

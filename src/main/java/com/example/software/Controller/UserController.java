@@ -1,6 +1,5 @@
 package com.example.software.Controller;
 
-import com.example.software.Entity.Comment;
 import com.example.software.Entity.Response;
 import com.example.software.Entity.User;
 import com.example.software.Service.DiaryService;
@@ -12,15 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RequestMapping("/user")
 @Controller
@@ -38,20 +36,18 @@ public class UserController {
 
     @ResponseBody
     @RequestMapping("/login")
-    public String login(HttpServletResponse httpServletResponse, @RequestBody User user){
-        Boolean b = userService.loginValidation(user.getUsername(),user.getPassword());
-        if(b)
-        {
-            Cookie cookie = new Cookie("username",user.getUsername());
-            cookie.setPath("/");
-            cookie.setMaxAge(3600);
-            httpServletResponse.addCookie(cookie);
-            String welcome = "Login Success! Welcome back "+ user.getUsername();
+    public String login(HttpServletRequest httpServletRequest, @RequestBody User user){
+        Optional<User> optionalUser = userService.login(user.getUsername(), user.getPassword());
+        if (optionalUser.isPresent()) {
+            HttpSession httpSession =httpServletRequest.getSession();
+            httpSession.setAttribute("user",optionalUser.get());
+            // 30 minutes * 60 seconds
+            httpSession.setMaxInactiveInterval(30*60);
+            String welcome = "Welcome Back, "+optionalUser.get().getScreenName();
             return new Gson().toJson(new Response(true,welcome));
-        }
-        else
-        {
-            return new Gson().toJson(new Response(false,"Username or password is incorrect!"));
+        } else {
+            String error = "Your username or password is incorrect!";
+            return new Gson().toJson(new Response(false,error));
         }
     }
 
@@ -79,37 +75,24 @@ public class UserController {
     @RequestMapping("/logout")
     public String logout(HttpServletRequest httpServletRequest)
     {
-        Cookie[] cookies = httpServletRequest.getCookies();
-        {
-            for(int i=0;i<cookies.length;i++)
-            {
-                // delete all the cookies
-                cookies[i].setMaxAge(0);
-            }
-        }
-        return new Gson().toJson(new Response(true,"Logout Success"));
+        HttpSession httpSession =httpServletRequest.getSession();
+        httpSession.removeAttribute("user");
+        return new Gson().toJson(new Response(true,"Sign Out Success!"));
     }
 
     @RequestMapping("/history")
-    public String history(Model model, @CookieValue(value = "username",required = false) String username){
-        //System.out.println(username);
-        if(username==null)
-        {
-            System.out.println("没有cookies");
-            // 应当返回需要登录页面并跳转到注册登录页
-        }
-        //添加该user的所有history
-        //返回页面
+    public String history(Model model){
+        // To do
         return "History";
     }
 
 
     @RequestMapping("/viewDiary")
-    public String viewDiary(Model model, @CookieValue(value = "username",required = false) String username)
+    public String viewDiary(Model model, HttpServletRequest httpServletRequest)
     {
-        if(username==null)
+        if(!validation(httpServletRequest))
         {
-            //返回登录页面
+            return "Login";
         }
         model.addAttribute(new Gson().toJson(diaryService.getCovers()));
         model.addAttribute(new Gson().toJson(diaryService.getPaperColors()));
@@ -117,5 +100,23 @@ public class UserController {
         return "ViewDiary";
     }
 
+    private boolean validation(HttpServletRequest httpServletRequest){
+        HttpSession httpSession = httpServletRequest.getSession(false);
+        if(httpSession!=null)
+        {
+            try {
+                User user = (User) httpSession.getAttribute("user");
+                if(user == null)
+                {
+                    return false;
+                }
+                return true;
+            }catch (Exception e)
+            {
+
+            }
+        }
+        return false;
+    }
 
 }

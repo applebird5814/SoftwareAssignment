@@ -113,7 +113,7 @@ public class CController {
 
 
     @RequestMapping("deleteTypeofPaper")
-@ResponseBody
+    @ResponseBody
     public String deleteTypeOfPaper(@RequestBody @Valid String id)
     {
         Boolean b = diaryService.deleteTypeOfPaper(id);

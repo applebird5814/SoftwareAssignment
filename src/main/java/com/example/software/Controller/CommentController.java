@@ -26,8 +26,6 @@ public class CommentController {
     @RequestMapping("/addComment")
     private String addComment(@RequestBody @Valid Comment comment)
     {
-        //添加comment
-        //返回gson
 
         Boolean b = commentService.createComment(comment);
         if(b)

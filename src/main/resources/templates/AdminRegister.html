@@ -11,18 +11,6 @@
 <body>
 
 
-<input type="hidden" id="type" th:value="${type}"/>
-<script>
-    if(document.getElementById("type").value==="")
-    {
-        alert("You must login as admin!");
-        window.location.href='/AdminLogin';
-    }
-    var type=$.parseJSON(document.getElementById("type") .value);
-    console.log(type);
-</script>
-
-
 <div>
     <div class="container">
         <div class="row justify-content-center">

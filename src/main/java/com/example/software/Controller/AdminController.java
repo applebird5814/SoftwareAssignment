@@ -16,14 +16,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.CookieValue;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RequestMapping("/admin")
 @Controller
@@ -45,47 +45,74 @@ public class AdminController {
     @Qualifier("userServiceImpl")
     UserService userService;
 
-    @RequestMapping("/")
-    public String adminIndex()
+    @RequestMapping("/index")
+    public String adminIndex(HttpServletRequest httpServletRequest)
     {
+        if(!validation(httpServletRequest))
+        {
+            return "AdminLogin";
+        }
         return "adminIndex";
     }
 
     @ResponseBody
     @RequestMapping("/adminlogin")
-    public String login(HttpServletResponse httpServletResponse, @RequestBody Admin admin){
-        Boolean b = adminService.loginValidation(admin.getUsername(),admin.getPassword());
-        if(b)
-        {
-            Cookie cookie = new Cookie("username",admin.getUsername());
-            cookie.setPath("/");
-            cookie.setMaxAge(3600);
-            httpServletResponse.addCookie(cookie);
-            String welcome = "Login Success! Welcome back admin "+ admin.getUsername();
+    public String login(HttpServletRequest httpServletRequest, @RequestBody Admin admin){
+        Optional<Admin> optionalAdmin = adminService.login(admin.getUsername(), admin.getPassword());
+        if (optionalAdmin.isPresent()) {
+            HttpSession httpSession =httpServletRequest.getSession();
+            httpSession.setAttribute("admin",optionalAdmin.get());
+            // 30 minutes * 60 seconds
+            httpSession.setMaxInactiveInterval(30*60);
+            String welcome = "Welcome Back, "+optionalAdmin.get().getUsername();
             return new Gson().toJson(new Response(true,welcome));
-        }
-        else
-        {
-            return new Gson().toJson(new Response(false,"Username or password is incorrect!"));
+        } else {
+            String error = "Your username or password is incorrect!";
+            return new Gson().toJson(new Response(false,error));
         }
     }
 
 
     @RequestMapping("/editDiary")
-    public String editDiary(Model model, @CookieValue(value = "admin",required = false) String admin){
-        if(admin==null)
+    public String editDiary(Model model, HttpServletRequest httpServletRequest){
+        if(!validation(httpServletRequest))
         {
-            //返回登录页面
+            return "AdminLogin";
         }
         model.addAttribute(new Gson().toJson(diaryService.getCovers()));
         model.addAttribute(new Gson().toJson(diaryService.getPaperColors()));
         model.addAttribute(new Gson().toJson(diaryService.getTypeOfPapers()));
-        //添加所有选项
-        //分列展示
-        //前端提供add，delete功能
         return "EditDiary";
     }
-    //构建多个方法，如/editDiary/cover/add
+
+    private boolean validation(HttpServletRequest httpServletRequest){
+        HttpSession httpSession = httpServletRequest.getSession(false);
+        if(httpSession!=null)
+        {
+            try {
+                Admin admin = (Admin) httpSession.getAttribute("admin");
+                if(admin == null)
+                {
+                    return false;
+                }
+                return true;
+            }catch (Exception e)
+            {
+
+            }
+        }
+        return false;
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/logout")
+    public String logout(HttpServletRequest httpServletRequest)
+    {
+        HttpSession httpSession =httpServletRequest.getSession();
+        httpSession.removeAttribute("admin");
+        return new Gson().toJson(new Response(true,"Admin Sign Out Success!"));
+    }
 
     @ResponseBody
     @RequestMapping("/editDiary/addCover")
@@ -117,40 +144,9 @@ public class AdminController {
     }
 
     @ResponseBody
-    @RequestMapping("/addUser")
-    public String addUser(@RequestBody @Valid User user, BindingResult result)
-    {
-        //添加user账户
-        //前端提供添加管理员功能以及删除用户功能
-
-        //添加用户
-        if(result.hasErrors()) {
-            for (ObjectError error : result.getAllErrors()) {
-                System.out.println(error.getDefaultMessage());
-            }
-            return new Gson().toJson(new Response(false,"Invalid Information"));
-        }
-
-        Boolean b = userService.createUser(user);
-
-        if(b)
-        {
-            return new Gson().toJson(new Response(true,"add a new user Success!"));
-        }
-        else
-        {
-            return new Gson().toJson(new Response(false,"User already exist！"));
-        }
-    }
-
-    @ResponseBody
     @RequestMapping("/addAdmin")
     public String addAdmin(@RequestBody @Valid Admin admin, BindingResult result)
     {
-        //添加所有user账户和admin账户
-        //前端提供添加管理员功能以及删除用户功能
-
-        //添加admin
         if(result.hasErrors()) {
             for (ObjectError error : result.getAllErrors()) {
                 System.out.println(error.getDefaultMessage());
@@ -170,41 +166,31 @@ public class AdminController {
         }
     }
 
+
     @ResponseBody
     @RequestMapping("/deleteUser")
-    public String deleteUser(@RequestBody User user)
+    public String deleteUser(@RequestParam("id") String id)
     {
-        //添加所有user账户和admin账户
-        //前端提供添加管理员功能以及删除用户功能
-
-        //删除用户
-        Boolean b = userService.deleteUser(user);
-
+        Boolean b = adminService.deleteUserById(id);
         if(b)
         {
-            String welcome = "Delete Success!"+ user.getUsername() +" has been deleted";
+            String welcome = "Delete Success! User id "+ id +" has been deleted";
             return new Gson().toJson(new Response(true,welcome));
         }
         else
         {
             return new Gson().toJson(new Response(false,"Delete Fail"));
         }
-
     }
 
     @ResponseBody
     @RequestMapping("/deleteAdmin")
-    public String deleteAdmin(@RequestBody Admin admin)
+    public String deleteAdmin(@RequestParam("id") String id)
     {
-        //添加所有user账户和admin账户
-        //前端提供添加管理员功能以及删除用户功能
-
-        //删除admin
-        Boolean b = adminService.deleteAdmin(admin);
-
+        Boolean b = adminService.deleteAdminById(id);
         if(b)
         {
-            String welcome = "Delete Success!"+ admin.getUsername() +" has been deleted";
+            String welcome = "Delete Success! Admin id "+ id +" has been deleted";
             return new Gson().toJson(new Response(true,welcome));
         }
         else
@@ -214,22 +200,33 @@ public class AdminController {
 
     }
 
-    //构建多个方法，如/accountManger/addAdmin /accountManager/deleteAccount并接受参数
 
-    @RequestMapping("/orderManger")
-    public String orderManger(Model model){
-        //添加所有order信息
-        return "orderManger";
-    }
-
-    @RequestMapping("/commentManger")
-    public String commentManger(Model model)
+    @RequestMapping("/addNewAdmin")
+    public String addNewAdmin(HttpServletRequest httpServletRequest)
     {
-        //添加所有Comment
-        return "commentManger";
+        if(!validation(httpServletRequest)){
+            return "AdminLogin";
+        }
+        return "AdminRegister";
     }
-    //构建删除评论功能
 
+    @RequestMapping("/login")
+    public String AdminLogin()
+    {
+        return "AdminLogin";
+    }
+
+    @RequestMapping("/manageAccount")
+    public String manageAccount(HttpServletRequest httpServletRequest,Model model)
+    {
+        if(!validation(httpServletRequest)){
+            return "AdminLogin";
+        }
+        model.addAttribute("Admin",new Gson().toJson(adminService.findAll()));
+        model.addAttribute("User",new Gson().toJson(userService.findAll()));
+
+        return "ManageAccount";
+    }
 
     @ResponseBody
     @RequestMapping("/AdminRegister")
