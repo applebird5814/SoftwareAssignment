@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css"/>
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
+    <title>View Address</title>
+</head>
+<body>
+<input type="hidden" id="address" th:value="${Address}"/>
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" id="addressList">
+
+        </div>
+    </div>
+</div>
+<script>
+    var address = $.parseJSON(document.getElementById("address").value);
+    console.log(address);
+    if (address.length === 0) {
+        $("#listMain").append("<p>Your Address list is empty, try to add address</p>");
+    } else {
+        for (var i = 0; i < address.length; i++) {
+            var single ="<div class=\"row\">"+
+                "    <div class=\"col-md-6\">"+address[i].address+"</div>\n" +
+                "    <div class=\"col-md-2\">"+address[i].urban+"</div>\n" +
+                "    <div class=\"col-md-1\">"+address[i].state+"</div>\n" +
+                "    <div class=\"col-md-1\">"+address[i].postCode+"</div>\n" +
+                "    <div class=\"col-md-2\"><button type='button' class=\"btn-sm btn-danger btn-block\" onclick=\"remove(" + i + ")\">Delete</button></div>"
+                +"</div>";
+            $("#addressList").append(single);
+        }
+    }
+
+
+    function remove(i) {
+        var id = address[i].id;
+        var url = '/address/deleteAddress?id=' + id;
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            contentType: "application/json",
+            data: "",
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert(data.message);
+                }
+            }
+        });
+    }
+</script>
+
+</body>
+</html>

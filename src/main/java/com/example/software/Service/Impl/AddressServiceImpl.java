@@ -15,36 +15,25 @@ public class AddressServiceImpl implements AddressService {
 
     @Override
     public boolean createAddress(Address address) {
-        if(addressDao.findByUserId(address.getUserId()).isPresent()){
+        if(addressDao.findById(address.getId()).isPresent()){
             return false;
         }
         addressDao.saveAndFlush(address);
         return true;
     }
 
-//    @Override
-//    public List<Address> getAddress(String userId) {
-//        return addressDao.findByUserId(userId);
-//    }
-
     @Override
-    public boolean deleteAddress(Address address) {
-        if(addressDao.findByUserId(address.getUserId()).isPresent()){
-            System.out.println(address.getUserId());
-            addressDao.deleteByUserId(address.getUserId());
+    public boolean deleteAddress(String id) {
+        if(addressDao.findById(id).isPresent()){
+            addressDao.deleteAddressById(id);
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean updateAddress(Address address) {
-        if(addressDao.findByUserId(address.getUserId()).isPresent()){
-            System.out.println(address.getUserId());
-            addressDao.updateByUserId(address.getId(), address.getAddress(), address.getPostCode(), address.getState(), address.getUrban(), address.getUserId());
-            return true;
-        }
-        return false;
+    public List<Address> findByUserId(String userId) {
+        return addressDao.findByUserId(userId);
     }
 
 

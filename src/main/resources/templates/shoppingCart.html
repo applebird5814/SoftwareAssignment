@@ -45,8 +45,9 @@
         <div class="col-md">Customizable Text</div>
         <div class="col-md text-center">Option</div>
     </div>
-
-    <div class=row id="listMain"></div>
+    <div class="row">
+        <div class="col-md-12" id="listMain"></div>
+    </div>
     <input type="hidden" id="products" th:value="${Products}"/>
     <br>
     <div class="row">
@@ -65,9 +66,7 @@
         $("#listMain").append("<p>Your shopping cart is empty! Go buy some!</p>");
     } else {
         for (var i = 0; i < products.length; i++) {
-            var single ="<div class=\"container\">" +
-
-                "        <div class=\"row\"> " +
+            var single ="        <div class=\"row\"> " +
 
                 "<div class=\"col-md-2\">" + (i + 1) + "</div>\n" +
 
@@ -82,8 +81,7 @@
 
                 "            <div class=\"col-md-2\" id=\"customizableText\">" + products[i].customizableText + "</div>\n" +
 
-                "<br>" +
-
+                     "<br>" +
 
 
                 "        <div class=\"col-md-2 text-center\"><button type='button' class=\"btn-sm btn-danger btn-block\" onclick=\"remove(" + i + ")\">Remove</button></div>" +

@@ -2,6 +2,7 @@ package com.example.software.Controller;
 
 import com.example.software.Entity.Response;
 import com.example.software.Entity.User;
+import com.example.software.Service.AddressService;
 import com.example.software.Service.DiaryService;
 import com.example.software.Service.UserService;
 import com.google.gson.Gson;
@@ -31,6 +32,10 @@ public class UserController {
     @Autowired
     @Qualifier("diaryServiceImpl")
     DiaryService diaryService;
+
+    @Autowired
+    @Qualifier("AddressServiceImpl")
+    AddressService addressService;
 
     @RequestMapping("/viewDiary")
     public String Customization(HttpServletRequest httpServletRequest,Model model)
@@ -115,5 +120,36 @@ public class UserController {
         }
         return false;
     }
+    @RequestMapping("/editAddress")
+    public String editAddress(HttpServletRequest httpServletRequest)
+    {
+        if(!validation(httpServletRequest))
+        {
+            return "Login";
+        }
+        return "EditAddress";
+    }
 
+    @RequestMapping("/addAddress")
+    public String addAddress(HttpServletRequest httpServletRequest)
+    {
+        if(!validation(httpServletRequest))
+        {
+            return "Login";
+        }
+        return "AddAddress";
+    }
+
+    @RequestMapping("/viewAddress")
+    public String viewAddress(HttpServletRequest httpServletRequest,Model model)
+    {
+        if(!validation(httpServletRequest))
+        {
+            return "Login";
+        }
+        HttpSession httpSession =httpServletRequest.getSession();
+        User user = (User) httpSession.getAttribute("user");
+        model.addAttribute("Address",new Gson().toJson(addressService.findByUserId(user.getId())));
+        return "ViewAddress";
+    }
 }

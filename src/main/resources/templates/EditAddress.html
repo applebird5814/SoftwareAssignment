@@ -66,8 +66,7 @@
 
 <script>
     function toAddAddress() {
-        window.location.href = "AddAddress"
-
+        window.location.href = "/user/addAddress"
     }
 
     function deleteAddress() {
@@ -76,10 +75,8 @@
         var state = document.getElementById("inputState").value;
         var urban = document.getElementById("inputUrban").value;
         var id = new Date().getTime().toString();
-        var userId = "1"; //for testing
         var json = JSON.stringify({
             "id" : id,
-            "userId" : userId,
             "address": address,
             "postCode": postCode,
             "state": state,
@@ -113,10 +110,8 @@
         var state = document.getElementById("inputState").value;
         var urban = document.getElementById("inputUrban").value;
         var id = new Date().getTime().toString();
-        var userId = "1"; //for testing
         var json = JSON.stringify({
             "id" : id,
-            "userId" : userId,
             "address": address,
             "postCode": postCode,
             "state": state,

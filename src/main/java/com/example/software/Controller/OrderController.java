@@ -4,6 +4,7 @@ import com.example.software.Entity.Diary;
 import com.example.software.Entity.DiaryOrder;
 import com.example.software.Entity.Response;
 import com.example.software.Entity.User;
+import com.example.software.Service.AddressService;
 import com.example.software.Service.DiaryService;
 import com.example.software.Service.OrderService;
 import com.google.gson.Gson;
@@ -33,6 +34,10 @@ public class OrderController {
     @Autowired
     @Qualifier("diaryServiceImpl")
     DiaryService diaryService;
+
+    @Autowired
+    @Qualifier("AddressServiceImpl")
+    AddressService addressService;
 
     @ResponseBody
     @RequestMapping("/addDiary")
@@ -100,7 +105,7 @@ public class OrderController {
         diaryOrder.setUserId(user.getId());
         diaryOrder.setState("waiting for address");
         httpSession.setAttribute("order",diaryOrder);
-        httpSession.removeAttribute("items");
+        model.addAttribute("Address",new Gson().toJson(addressService.findByUserId(user.getId())));
         return "AddAddressAndDeliverOption";
     }
 
@@ -120,6 +125,7 @@ public class OrderController {
                 list.get(i).setOrderId(order.getId());
             }
             diaryService.addDiary(list);
+            httpSession.removeAttribute("items");
             return new Gson().toJson(new Response(true,"Your order has been placed"));
         }
         else {

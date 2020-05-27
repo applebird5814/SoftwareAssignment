@@ -26,7 +26,8 @@
 </nav>
 <body>
 
-<div>
+
+    <input type="hidden" id="address" th:value="${Address}"/>
     <div class="container">
         <div class="row justify-content-center">
             <form class="form-signIn">
@@ -34,10 +35,12 @@
                     <h1 class="h3 mb-3 font-weight-normal">Delivery Address</h1>
                 </div>
 
-                <div class="form-label-group">
-                    <label for="inputAddress">Address</label>
-                    <input type="text" id="inputAddress" class="form-control" placeholder="Address" required autofocus>
-                </div><br>
+                <div class="form-group">
+                    <select name="address" class="custom-select" id="inputAddress">
+                        <option selected>Select Your Address</option>
+                    </select>
+                </div>
+
 
                 <div class="form-label-group">
                     <label>Delivery Options</label><br>
@@ -50,18 +53,25 @@
             </form>
         </div>
     </div>
-</div>
 
 
 <script>
+    var address = $.parseJSON(document.getElementById("address").value);
+
+        for (var i = 0; i < address.length; i++) {
+            var addressString = address[i].address+address[i].urban+address[i].state+address[i].postCode;
+            var single ="<option value="+addressString+">"+addressString+"</option>";
+            $("#inputAddress").append(single);
+        }
+
     function addAddressDelivery() {
         var address = document.getElementById("inputAddress").value;
-        var deliverOption = document.querySelector('input[type=radio][name=delivery]');
-        var id = 1;
+
+        var deliverOption = $("input[type='radio']:checked").val();
+
         var json = JSON.stringify({
-            "id" : id,
             "address": address,
-            "deliverOption": deliverOption.value,
+            "deliverOption": deliverOption,
         });
 
         $.ajax({

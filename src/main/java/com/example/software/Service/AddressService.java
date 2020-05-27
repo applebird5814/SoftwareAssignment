@@ -8,7 +8,7 @@ public interface AddressService {
 
     boolean createAddress(Address address);
 
-    boolean deleteAddress(Address address);
+    boolean deleteAddress(String id);
 
-    boolean updateAddress(Address address);
+    List<Address> findByUserId(String userId);
 }

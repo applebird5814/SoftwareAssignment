@@ -7,12 +7,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class MainController {
 
-
-    @RequestMapping("/shoppingCart")
-    public String shoppingCart(){
-        return "shoppingCart";
-    }
-
     @RequestMapping("/*")
     @ResponseBody
     public String HelloWorld()
@@ -44,23 +38,5 @@ public class MainController {
         return "HomePage";
     }
 
-    @RequestMapping("/editOrder")
-    public String editOrder()
-    {
-        return "editOrder";
-    }
 
-
-
-    @RequestMapping("/EditAddress")
-    public String EditAddress()
-    {
-        return "EditAddress";
-    }
-
-    @RequestMapping("/AddAddress")
-    public String AddAddress()
-    {
-        return "AddAddress";
-    }
 }
