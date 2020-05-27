@@ -8,85 +8,111 @@
     <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
     <title>Shopping Cart</title>
 </head>
+<nav class="navbar navbar-expand-sm bg-light navbar-light">
+    <ul class="navbar-nav">
+        <li class="nav-item active">
+            <a class="nav-link" href="/homePage">Home</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/BuyDiary">Buy Diary!</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="/register">Sign up!</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link disabled" href="#">Disabled</a>
+        </li>
+    </ul>
+</nav>
 <body>
 <div class="container">
     <div class="row">
-        <div class="col-md-12">All products：</div>
-    </div>
-    <div class="row">
-        <div class="col-md-2">Code</div>
-        <div class="col-md-7">Product:<br>
-            <div class="row">
-                <div class="col-md-3">Cover Type</div>
-                <div class="col-md-3">Paper Type</div>
-                <div class="col-md-3">Paper Color</div>
-                <div class="col-md-3">Customizable Text</div>
+        <div class="col-md-12">
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h1>Shopping Cart</h1>
+                    <p>You can view or delete your items here</p>
+                </div>
             </div>
         </div>
-        <div class="col-md-3">Option</div>
     </div>
 
-    <div class=row id="listMain"></div>
-    <input type="hidden" id="products" th:value="${Products}"/>
+    <div class="row">
+        <div class="col-md">No.</div>
+        <div class="col-md">Cover Type</div>
+        <div class="col-md">Paper Type</div>
+        <div class="col-md">Paper Color</div>
+        <div class="col-md">Customizable Text</div>
+        <div class="col-md text-center">Option</div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-10"></div>
+        <div class="col-md-2 text-center">
+            <button type="button" class="btn-success btn-sm ">Check Out!</button>
+        </div>
+
+    </div>
+</div>
 
 
-        <script>
-            var products = $.parseJSON(document.getElementById("products").value);
-            console.log(products);
-            if (products.length == 0) {
-                $("#listMain").append("<p>Your shopping cart is empty! Go buy some!</p>");
-            } else {
-                for (var i = 0; i < products.length; i++) {
-                    var single = "<div class=\"col-md-2\">"+(i+1)+ "</div>\n" +
-                        "        <div class=\"col-md-7\">\n" +
-                        "        <div class=\"row\"> " +
-                        "            <div class=\"col-md-3\">\n" +
-                        "            <div class=\"col-md-3\" id=\"coverType\">" + products[i].cover + "</div>\n" +
-                        "            </div>\n" +
-                        "            <div class=\"col-md-3\">\n" +
-                        "            <div class=\"col-md-3\" id=\"paperType\">" + products[i].typeOfPaper + "</div>\n" +
-                        "            </div>\n" +
-                        "            <div class=\"col-md-3\">\n" +
-                        "            <div class=\"col-md-3\" id=\"paperColor\">" + products[i].paperColor + "</div>\n" +
-                        "            </div>\n" +
-                        "            <div class=\"col-md-3\">\n" +
-                        "            <div class=\"col-md-3\" id=\"customizableText\">" + products[i].customizableText + "</div>\n" +
-                        "            </div>" +
-                        "        </div>\n" +
-                        "        </div>\n" +
-                        "        <div class=\"col-md-3\"><button class=\"btn-sm\" onclick=\"remove("+i+")\">Remove</button></div>";
-                    $("#listMain").append(single);
+
+<div class=row id="listMain"></div>
+<input type="hidden" id="products" th:value="${Products}"/>
+
+
+<script>
+    var products = $.parseJSON(document.getElementById("products").value);
+    console.log(products);
+    if (products.length == 0) {
+        $("#listMain").append("<p>Your shopping cart is empty! Go buy some!</p>");
+    } else {
+        for (var i = 0; i < products.length; i++) {
+            var single = "<div class=\"col-md-2\">" + (i + 1) + "</div>\n" +
+                "        <div class=\"col-md-7\">\n" +
+                "        <div class=\"row\"> " +
+                "            <div class=\"col-md-3\">\n" +
+                "            <div class=\"col-md-3\" id=\"coverType\">" + products[i].cover + "</div>\n" +
+                "            </div>\n" +
+                "            <div class=\"col-md-3\">\n" +
+                "            <div class=\"col-md-3\" id=\"paperType\">" + products[i].typeOfPaper + "</div>\n" +
+                "            </div>\n" +
+                "            <div class=\"col-md-3\">\n" +
+                "            <div class=\"col-md-3\" id=\"paperColor\">" + products[i].paperColor + "</div>\n" +
+                "            </div>\n" +
+                "            <div class=\"col-md-3\">\n" +
+                "            <div class=\"col-md-3\" id=\"customizableText\">" + products[i].customizableText + "</div>\n" +
+                "            </div>" +
+                "        </div>\n" +
+                "        </div>\n" +
+                "        <div class=\"col-md-3\"><button type='button' class=\"btn-sm btn-danger\" onclick=\"remove(" + i + ")\">Remove</button></div>";
+            $("#listMain").append(single);
+        }
+    }
+
+    function remove(i) {
+        var id = products[i].id;
+        var url = '/order/removeDiary?id=' + id;
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: url,
+            contentType: "application/json",
+            data: "",
+            success: function (data) {
+                if (data.success) {
+                    alert(data.message);
+                    window.location.reload();
+                } else {
+                    alert(data.message);
                 }
             }
+        });
 
-            function remove(i) {
-                var id = products[i].id;
-                var url = '/order/removeDiary?id='+id;
-                $.ajax({
-                    type: "POST",
-                    dataType: "json",
-                    url: url,
-                    contentType: "application/json",
-                    data: "",
-                    success:function (data) {
-                        if(data.success)
-                        {
-                            alert(data.message);
-                            window.location.reload();
-                        }
-                        else
-                        {
-                            alert(data.message);
-                        }
-                    }
-                });
+    }
+</script>
 
-            }
-        </script>
-    <div class="row">
-        <div class="col-md-8"></div>
-        <div class="col-md-4">去结算</div>
-    </div>
+
 </div>
 </body>
 </html>
