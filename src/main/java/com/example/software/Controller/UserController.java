@@ -33,12 +33,15 @@ public class UserController {
     DiaryService diaryService;
 
     @RequestMapping("/viewDiary")
-    public String Customization(HttpServletRequest httpServletRequest)
+    public String Customization(HttpServletRequest httpServletRequest,Model model)
     {
         if(!validation(httpServletRequest))
         {
             return "Login";
         }
+        model.addAttribute("TypeOfPaper",new Gson().toJson(diaryService.getTypeOfPapers()));
+        model.addAttribute("Color",new Gson().toJson(diaryService.getPaperColors()));
+        model.addAttribute("Cover",new Gson().toJson(diaryService.getCovers()));
         return "BuyDiary";
     }
 

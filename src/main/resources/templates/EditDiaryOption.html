@@ -53,58 +53,55 @@
                 <button class="btn btn-lg btn-danger btn-block" type="button" onclick="addPaperType()">Add Paper Type</button>
             </div>
         </div>
-        <div class="row justify-content-center">
-
-                <div class="form-label-group">
-                    <input type="text" id="deleteCover" class="form-control" placeholder="cover for delete" required
-                           autofocus>
-                    <label for="inputCover">deleteCover</label>
-                </div>
-
-                <div class="form-label-group">
-                    <input type="text" id="deletePaperColor" class="form-control" placeholder="PaperColor" required
-                           autofocus>
-                    <label for="inputPaperColor">deletePaperColor</label>
-                </div>
-
-                <div class="form-label-group">
-                    <input type="text" id="deleteTypeofPaper" class="form-control" placeholder="TypeofPaper" required
-                           autofocus>
-                    <label for="inputTypeofPaper">deletePaperType</label>
-                </div>
-
-                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="deletecover()">delete Cover
-                </button>
-                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="deletecolor()">delete Paper
-                    Color
-                </button>
-                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="deletetype()">delete Paper Type
-                </button>
-
-                <div>
-                    <table class="table table-striped">
-                        <tr>
-                            <th>id</th>
-                            <th>covername</th>
-                        </tr>
-
-                        <tr th:each="get:${showcover}">
-                            <td th:text="${get.id}"></td>
-                            <td th:text="${get.coverName}"></td>
-                        </tr>
-                    </table>
-                </div>
-            </form>
+        <div class="row">
+            <div class="col-md-4" id="coverList"></div>
+            <div class="col-md-4" id="paperColorList"></div>
+            <div class="col-md-4" id="paperTypeList"></div>
         </div>
     </div>
 </div>
-
-
+<input type="hidden" id="paperColor" th:value="${Color}"/>
+<input type="hidden" id="paperType" th:value="${TypeOfPaper}"/>
+<input type="hidden" id="cover" th:value="${Cover}"/>
 <script>
+    var paperColor = $.parseJSON(document.getElementById("paperColor").value);
+    console.log(paperColor);
+    for(var i=0;i<paperColor.length;i++){
+        var single =
+            "    <div class=\"row\">\n" +
+            "        <div class=\"col-md-8\">"+paperColor[i].color+"</div>\n" +
+            "        <div class=\"col-md-4\">" +
+            "        <button class=\"btn-sm\" onclick=\"deletePaperColor("+i+")\">delete</button></div> \n" +
+            "    </div>";
+        $("#paperColorList").append(single);
+    }
+    var paperType = $.parseJSON(document.getElementById("paperType").value);
+    console.log(paperType);
+    for(var i=0;i<paperType.length;i++){
+        var single =
+            "    <div class=\"row\">\n" +
+            "        <div class=\"col-md-8\">"+paperType[i].typeOfPaper+"</div>\n" +
+            "        <div class=\"col-md-4\">" +
+            "        <button class=\"btn-sm\" onclick=\"deletePaperType("+i+")\">delete</button></div> \n" +
+            "    </div>";
+        $("#paperTypeList").append(single);
+    }
+    var cover = $.parseJSON(document.getElementById("cover").value);
+    console.log(cover);
+    for(var i=0;i<cover.length;i++){
+        var single =
+            "    <div class=\"row\">\n" +
+            "        <div class=\"col-md-8\">"+cover[i].coverName+"</div>\n" +
+            "        <div class=\"col-md-4\">" +
+            "        <button class=\"btn-sm\" onclick=\"deleteCover("+i+")\">delete</button></div> \n" +
+            "    </div>";
+        $("#coverList").append(single);
+    }
+
+
     function addCover() {
         var inputCover = document.getElementById("inputCover").value;
-
-        var id = 1;
+        var id = new Date().getTime().toString();
         var json = JSON.stringify({
             "id": id,
             "coverName": inputCover,
@@ -112,7 +109,7 @@
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: '/cover/addCover',
+            url: '/admin/addCover',
             contentType: "application/json",
             data: json,
             success: function (data) {
@@ -128,8 +125,7 @@
 
     function addPaperColor() {
         var color = document.getElementById("inputPaperColor").value;
-
-        var id = 1;
+        var id = new Date().getTime().toString();
         var json = JSON.stringify({
             "id": id,
             "color": color,
@@ -137,13 +133,13 @@
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: '/cover/addPaperColorName',
+            url: '/admin/addPaperColorName',
             contentType: "application/json",
             data: json,
             success: function (data) {
                 if (data.success) {
-                    window.location.reload();
                     alert(data.message);
+                    window.location.reload();
                 } else {
                     alert(data.message);
                 }
@@ -153,8 +149,7 @@
 
     function addPaperType() {
         var inputTypeofPaper = document.getElementById("inputTypeofPaper").value;
-
-        var id = 1;
+        var id = new Date().getTime().toString();
         var json = JSON.stringify({
             "id": id,
             "typeOfPaper": inputTypeofPaper,
@@ -162,13 +157,13 @@
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: '/cover/addTypeOfPaper',
+            url: '/admin/addTypeOfPaper',
             contentType: "application/json",
             data: json,
             success: function (data) {
                 if (data.success) {
+                    alert(data.message);
                     window.location.reload();
-                    alert(data.message);
                 } else {
                     alert(data.message);
                 }
@@ -176,72 +171,66 @@
         });
     }
 
-
-    function deletecover() {
-        var id = document.getElementById("deleteCover").value;
-        // var json = JSON.stringify({
-        //     id,
-        // });
+    function deleteCover(x) {
+        var id = cover[x].id;
+        var url = "/admin/deleteCover?id="+id;
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: '/cover/deleteCoverName',
+            url: url,
             contentType: "application/json",
-            data: id,
+            data: "",
             success: function (data) {
                 if (data.success) {
                     alert(data.message);
-
+                    window.location.reload();
                 } else {
                     alert(data.message);
                 }
             }
         });
     }
-
-    function deletecolor() {
-        var id = document.getElementById("deletePaperColor").value;
-        // var json = JSON.stringify({
-        //     id,
-        // });
+    function deletePaperType(x) {
+        var id = paperType[x].id;
+        var url = "/admin/deletePaperType?id="+id;
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: '/cover/deletePaperColorName',
+            url: url,
             contentType: "application/json",
-            data: id,
+            data: "",
             success: function (data) {
                 if (data.success) {
                     alert(data.message);
-
+                    window.location.reload();
                 } else {
                     alert(data.message);
                 }
             }
         });
     }
-
-    function deletetype() {
-        var id = document.getElementById("deleteTypeofPaper").value;
-        // var json = JSON.stringify({
-        //     id,
-        // });
+    function deletePaperColor(x) {
+        var id = paperColor[x].id;
+        var url = "/admin/deletePaperColor?id="+id;
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: '/cover/deleteTypeofPaper',
+            url: url,
             contentType: "application/json",
-            data: id,
+            data: "",
             success: function (data) {
                 if (data.success) {
                     alert(data.message);
-
+                    window.location.reload();
                 } else {
                     alert(data.message);
                 }
             }
         });
     }
+
+
+
 
 </script>
 

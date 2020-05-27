@@ -2,9 +2,10 @@ package com.example.software.Controller;
 
 import com.example.software.Entity.Admin;
 import com.example.software.Entity.DiaryDetail.Cover;
+import com.example.software.Entity.DiaryDetail.PaperColor;
+import com.example.software.Entity.DiaryDetail.TypeOfPaper;
 import com.example.software.Entity.DiaryOrder;
 import com.example.software.Entity.Response;
-import com.example.software.Entity.User;
 import com.example.software.Service.AdminService;
 import com.example.software.Service.DiaryService;
 import com.example.software.Service.OrderService;
@@ -18,9 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 import java.util.Optional;
@@ -72,18 +71,6 @@ public class AdminController {
         }
     }
 
-    @RequestMapping("/editDiary")
-    public String editDiary(Model model, HttpServletRequest httpServletRequest){
-        if(!validation(httpServletRequest))
-        {
-            return "AdminLogin";
-        }
-        model.addAttribute(new Gson().toJson(diaryService.getCovers()));
-        model.addAttribute(new Gson().toJson(diaryService.getPaperColors()));
-        model.addAttribute(new Gson().toJson(diaryService.getTypeOfPapers()));
-        return "EditDiary";
-    }
-
     private boolean validation(HttpServletRequest httpServletRequest){
         HttpSession httpSession = httpServletRequest.getSession(false);
         if(httpSession!=null)
@@ -112,20 +99,6 @@ public class AdminController {
         return new Gson().toJson(new Response(true,"Admin Sign Out Success!"));
     }
 
-    @ResponseBody
-    @RequestMapping("/editDiary/addCover")
-    public String addCover(@Valid Cover cover)
-    {
-        Boolean b = diaryService.addCover(cover);
-        if(b)
-        {
-            return new Gson().toJson(new Response(true,"Add cover success"));
-        }
-        else
-        {
-            return new Gson().toJson(new Response(false,"There's a cover with the same information!"));
-        }
-    }
 
     @ResponseBody
     @RequestMapping("/changeState")
@@ -213,6 +186,18 @@ public class AdminController {
         return "AdminLogin";
     }
 
+    @RequestMapping("/manageDiaryOption")
+    public String manageDiaryOption(HttpServletRequest httpServletRequest,Model model)
+    {
+        if(!validation(httpServletRequest)){
+            return "AdminLogin";
+        }
+        model.addAttribute("TypeOfPaper",new Gson().toJson(diaryService.getTypeOfPapers()));
+        model.addAttribute("Color",new Gson().toJson(diaryService.getPaperColors()));
+        model.addAttribute("Cover",new Gson().toJson(diaryService.getCovers()));
+        return "EditDiaryOption";
+    }
+
     @RequestMapping("/manageAccount")
     public String manageAccount(HttpServletRequest httpServletRequest,Model model)
     {
@@ -255,5 +240,96 @@ public class AdminController {
         }
     }
 
+    @ResponseBody
+    @RequestMapping("/addCover")
+    public String addCover(@RequestBody @Valid Cover cover)
+    {
+        Boolean b = diaryService.addCover(cover);
+        if(b)
+        {
+            return new Gson().toJson(new Response(true,"Add cover success"));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"There's a cover with the same information!"));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/addPaperColorName")
+    public String addPaperColor(@RequestBody @Valid PaperColor paperColor)
+    {
+        Boolean b = diaryService.addPaperColor(paperColor);
+        if(b)
+        {
+            return new Gson().toJson(new Response(true,"Add paperColor success"));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"There's a paperColor with the same information!"));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/addTypeOfPaper")
+    public String addTypeOfPaper(@RequestBody @Valid TypeOfPaper typeOfPaper)
+    {
+        Boolean b = diaryService.addTypeOfPaper(typeOfPaper);
+        if(b)
+        {
+            return new Gson().toJson(new Response(true,"Add typeOfPaper success"));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"There's a typeOfPaper with the same information!"));
+        }
+    }
+
+
+    @ResponseBody
+    @RequestMapping("/deleteCover")
+    public String deleteCover(@RequestParam("id") String id)
+    {
+        Boolean b = diaryService.deleteCover(id);
+        System.out.println(b);
+        if(b)
+        {
+            return new Gson().toJson(new Response(true,"delete cover success"));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"There's no cover with the same information!"));
+        }
+    }
+
+    @ResponseBody
+    @RequestMapping("/deletePaperColor")
+    public String deletePaperColor(@RequestParam("id") String id)
+    {
+        Boolean b = diaryService.deletePaperColor(id);
+        if(b)
+        {
+            return new Gson().toJson(new Response(true,"delete paperColor success"));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"There's no paperColor with the same information!"));
+        }
+    }
+
+    @RequestMapping("deletePaperType")
+    @ResponseBody
+    public String deleteTypeOfPaper(@RequestParam("id") String id)
+    {
+        Boolean b = diaryService.deleteTypeOfPaper(id);
+        if(b)
+        {
+            return new Gson().toJson(new Response(true,"delete typeOfPaper success"));
+        }
+        else
+        {
+            return new Gson().toJson(new Response(false,"There's no typeOfPaper with the same information!"));
+        }
+    }
 
 }

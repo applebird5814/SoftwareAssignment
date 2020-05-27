@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1.0">
@@ -8,6 +8,7 @@
     <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
     <title>Customize your diary!</title>
 </head>
+<body>
 <nav class="navbar navbar-expand-sm bg-light navbar-light">
     <ul class="navbar-nav">
         <li class="nav-item active">
@@ -24,7 +25,9 @@
         </li>
     </ul>
 </nav>
-<body>
+<input type="hidden" id="paperColor" th:value="${Color}"/>
+<input type="hidden" id="paperType" th:value="${TypeOfPaper}"/>
+<input type="hidden" id="cover" th:value="${Cover}"/>
 <div class="container pt-3">
 
     <div class="text-center mb-4">
@@ -100,34 +103,18 @@
             <div class="form-group">
                 <select name="covers" class="custom-select" id="selectCover">
                     <option selected>Select cover types</option>
-                    <option value="leather">Leather</option>
-                    <option value="fabric">Fabric</option>
-                    <option value="hardpaper">Hard paper</option>
-                    <option value="chinese">Chinese style</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <select name="paperTypes" class="custom-select" id="selectPaper">
                     <option selected>Select paper types</option>
-                    <option value="plain">Plain</option>
-                    <option value="dotted">Dotted</option>
-                    <option value="lined">Lined</option>
-                    <option value="verticallined">Vertical lined</option>
                 </select>
             </div>
 
             <div class="form-group">
                 <select name="PaperColours" class="custom-select" id="selectColour">
                     <option selected>Select paper colour</option>
-                    <option value="white">White</option>
-                    <option value="grey">Gery</option>
-                    <option value="pink">Pink</option>
-                    <option value="green">Green</option>
-                    <option value="birch">Birch</option>
-                    <option value="sheepskin">Sheepskin</option>
-                    <option value="yellow">Yellow</option>
-                    <option value="teal">Teal</option>
                 </select>
             </div>
 
@@ -140,7 +127,6 @@
                 <button type="btn" class="btn btn-primary btn-block " onclick="submit()">Add to cart</button>
             </div>
 
-
             <div class="form-group pt-1">
                 <button type="button" class="btn btn-secondary btn-block " onclick="toCart()">Trolley</button>
             </div>
@@ -148,6 +134,26 @@
     </div>
 </div>
 <script>
+
+    var paperColor = $.parseJSON(document.getElementById("paperColor").value);
+    console.log(paperColor);
+    for(var i=0;i<paperColor.length;i++){
+        var single ="<option value="+paperColor[i].color+">"+paperColor[i].color+"</option>";
+        $("#selectColour").append(single);
+    }
+    var paperType = $.parseJSON(document.getElementById("paperType").value);
+    console.log(paperType);
+    for(var i=0;i<paperType.length;i++){
+        var single ="<option value="+paperType[i].typeOfPaper+">"+paperType[i].typeOfPaper+"</option>";
+        $("#selectPaper").append(single);
+    }
+    var cover = $.parseJSON(document.getElementById("cover").value);
+    console.log(cover);
+    for(var i=0;i<cover.length;i++){
+        var single ="<option value="+cover[i].coverName+">"+cover[i].coverName+"</option>";
+        $("#selectCover").append(single);
+    }
+
 
     function submit() {
         var cover = document.getElementById("selectCover").value;
