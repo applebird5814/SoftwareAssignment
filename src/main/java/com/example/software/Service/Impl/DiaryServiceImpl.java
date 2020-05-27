@@ -2,8 +2,10 @@ package com.example.software.Service.Impl;
 
 
 import com.example.software.Dao.CoverDao;
+import com.example.software.Dao.DiaryDao;
 import com.example.software.Dao.PaperColorDao;
 import com.example.software.Dao.TypeOfPaperDao;
+import com.example.software.Entity.Diary;
 import com.example.software.Entity.DiaryDetail.Cover;
 import com.example.software.Entity.DiaryDetail.PaperColor;
 import com.example.software.Entity.DiaryDetail.TypeOfPaper;
@@ -13,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service("diaryServiceImpl")
@@ -25,6 +28,9 @@ public class DiaryServiceImpl implements DiaryService {
 
     @Autowired
     private PaperColorDao paperColorDao;
+
+    @Autowired
+    private DiaryDao diaryDao;
 
     @Override
     public List<Cover> getCovers() {
@@ -112,6 +118,11 @@ public class DiaryServiceImpl implements DiaryService {
         return false;
     }
 
+    @Override
+    public boolean addDiary(ArrayList<Diary> list) {
+        diaryDao.saveAll(list);
+        return true;
+    }
 
 
 }

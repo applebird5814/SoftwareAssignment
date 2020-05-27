@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class Diary {
     @Id
-    @GeneratedValue
     private int id;
     @NotNull
     private String paperColor;
@@ -18,6 +17,8 @@ public class Diary {
     private String typeOfPaper;
 
     private String customizableText;
+
+    private int orderId;
 
     public int getId() {
         return id;
@@ -68,5 +69,13 @@ public class Diary {
                 ", typeOfPaper='" + typeOfPaper + '\'' +
                 ", customizableText='" + customizableText + '\'' +
                 '}';
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
+    public void setOrderId(int orderId) {
+        this.orderId = orderId;
     }
 }

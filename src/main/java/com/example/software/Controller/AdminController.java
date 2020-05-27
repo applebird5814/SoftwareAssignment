@@ -216,7 +216,7 @@ public class AdminController {
         {
             return "AdminLogin";
         }
-
+        model.addAttribute("Order",new Gson().toJson(orderService.getAllOrder()));
         return "ManageOrder";
     }
 

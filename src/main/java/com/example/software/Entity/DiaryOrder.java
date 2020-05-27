@@ -11,9 +11,11 @@ public class DiaryOrder {
     private int id;
     @NotNull
     private String userId;
+    @NotNull
     private String address;
     @NotNull
     private String time;
+    @NotNull
     private String deliverOption;
     @NotNull
     private String state;

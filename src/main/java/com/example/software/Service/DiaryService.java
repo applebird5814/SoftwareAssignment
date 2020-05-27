@@ -1,9 +1,11 @@
 package com.example.software.Service;
 
+import com.example.software.Entity.Diary;
 import com.example.software.Entity.DiaryDetail.Cover;
 import com.example.software.Entity.DiaryDetail.PaperColor;
 import com.example.software.Entity.DiaryDetail.TypeOfPaper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public interface DiaryService {
@@ -22,6 +24,8 @@ public interface DiaryService {
 
     boolean addTypeOfPaper(TypeOfPaper typeOfPaper);
     boolean deleteTypeOfPaper(String id);
+
+    boolean addDiary(ArrayList<Diary> list);
 
 
 }

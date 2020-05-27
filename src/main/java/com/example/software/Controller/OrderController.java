@@ -3,6 +3,8 @@ package com.example.software.Controller;
 import com.example.software.Entity.Diary;
 import com.example.software.Entity.DiaryOrder;
 import com.example.software.Entity.Response;
+import com.example.software.Entity.User;
+import com.example.software.Service.DiaryService;
 import com.example.software.Service.OrderService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.UUID;
 
 @RequestMapping("/order")
@@ -26,6 +29,10 @@ public class OrderController {
     @Autowired
     @Qualifier("orderServiceImpl")
     OrderService orderService;
+
+    @Autowired
+    @Qualifier("diaryServiceImpl")
+    DiaryService diaryService;
 
     @ResponseBody
     @RequestMapping("/addDiary")
@@ -75,13 +82,6 @@ public class OrderController {
         return new Gson().toJson(new Response(false,"remove fail"));
     }
 
-    @ResponseBody
-    @RequestMapping("/addDiary/submit")
-    public String submitAddDiary(@RequestBody Diary diary){
-        //将该日记加入session中
-        //返回gson数据，告知是否成功
-        return "gson";
-    }
 
     @RequestMapping("/shoppingCart")
     public String shoppingCart(HttpServletRequest httpServletRequest,Model model){
@@ -91,29 +91,41 @@ public class OrderController {
     }
 
     @RequestMapping("/checkout")
-    public String checkOut(){
-        //生成一个order对象
-        //将order对象返还给前端
-        //进入地址选择阶段
-        //将地址信息列表以及运送方式列表返回给前端
-        return "选择地址以及运送方式页面";
+    public String checkOut(HttpServletRequest httpServletRequest,Model model){
+        HttpSession httpSession =httpServletRequest.getSession();
+        DiaryOrder diaryOrder = new DiaryOrder();
+        diaryOrder.setId((int)System.currentTimeMillis()/1000);
+        diaryOrder.setTime(new Date().toString());
+        User user =(User)httpSession.getAttribute("user");
+        diaryOrder.setUserId(user.getId());
+        diaryOrder.setState("waiting for address");
+        httpSession.setAttribute("order",diaryOrder);
+        httpSession.removeAttribute("items");
+        return "AddAddressAndDeliverOption";
     }
 
     @ResponseBody
     @RequestMapping("/addAddressAndDeliverOption")
-    public String addAddressAndDeliverOption(@RequestBody DiaryOrder diaryOrder){
-        System.out.println(diaryOrder.getId());
-        Boolean b = orderService.addAddressAndDeliverOption(diaryOrder.getId(),diaryOrder.getAddress(),diaryOrder.getDeliverOption());
-        if(b)
-        {
-            return new Gson().toJson(new Response(true,"Change Success"));
+    public String addAddressAndDeliverOption(HttpServletRequest httpServletRequest,@RequestBody DiaryOrder diaryOrder){
+        HttpSession httpSession =httpServletRequest.getSession();
+        DiaryOrder order = (DiaryOrder) httpSession.getAttribute("order");
+        order.setAddress(diaryOrder.getAddress());
+        order.setDeliverOption(diaryOrder.getDeliverOption());
+        order.setState("waiting for deliver");
+        boolean b = orderService.createOrder(order);
+        if(b){
+            ArrayList<Diary> list=(ArrayList<Diary>) httpSession.getAttribute("items");
+            for(int i=0;i<list.size();i++)
+            {
+                list.get(i).setOrderId(order.getId());
+            }
+            diaryService.addDiary(list);
+            return new Gson().toJson(new Response(true,"Your order has been placed"));
         }
-        else
-        {
-            return new Gson().toJson(new Response(false,"Error!"));
+        else {
+            return new Gson().toJson(new Response(false,"Something wrong happens, please try again"));
         }
     }
-
 
 
     @ResponseBody

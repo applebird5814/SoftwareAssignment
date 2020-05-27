@@ -51,12 +51,6 @@ public class MainController {
     }
 
 
-    @RequestMapping("/AddAddressAndDeliverOption")
-    public String AddAddressAndDeliverOption()
-    {
-        return "AddAddressAndDeliverOption";
-    }
-
 
     @RequestMapping("/EditAddress")
     public String EditAddress()

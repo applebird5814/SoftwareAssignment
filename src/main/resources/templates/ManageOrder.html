@@ -1,10 +1,124 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <link rel="stylesheet" href="/webjars/bootstrap/4.4.1/css/bootstrap.min.css" />
+    <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
+    <script src="/webjars/bootstrap/4.4.1/js/bootstrap.js"></script>
     <title>Manage Order</title>
 </head>
 <body>
+<input type="hidden" id="order" th:value="${Order}"/>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-12" id="orderList"></div>
+    </div>
+
+</div>
+
+<script>
+    var order=$.parseJSON(document.getElementById("order").value);
+    var sum = "";
+    for(var i=0;i<order.length;i++){
+        var single ="            <div class=\"row\">\n" +
+            "                <div class=\"col-md-2\">Order Number:"+order[i].id+"</div>\n" +
+            "                <div class=\"col-md-2\">User Id:"+order[i].userId+"</div>\n" +
+            "                <div class=\"col-md-3\">Order Time:"+order[i].time+"</div>\n" +
+            "                <div class=\"col-md-2\">Deliver Option:"+order[i].deliverOption+"</div>\n" +
+            "                <div class=\"col-md-3\">State:"+order[i].state+"</div>\n" +
+            "            </div>\n" +
+            "            <div class=\"row\">\n" +
+            "                <div class=\"col-md-9\">Address:"+order[i].address+"</div>\n" +
+            "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"ship("+i+")\">Shipping</button></div>\n" +
+            "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"stock("+i+")\">Stocking</button></div>\n" +
+            "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"complete("+i+")\">Complete</button></div>\n" +
+            "            </div>";
+        sum=sum+single;
+    }
+    document.getElementById("orderList").innerHTML=sum;
+
+    function ship(x) {
+        var state = "Shipping";
+        var id = order[x].id;
+        var json = JSON.stringify({
+            "id": id,
+            "state":state,
+        });
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/admin/changeState',
+            contentType: "application/json",
+            data: json,
+            success:function (data) {
+                if(data.success)
+                {
+                    alert(data.message);
+                    window.location.reload();
+                }
+                else
+                {alert(data.message);
+                }
+            }
+        });
+    }
+
+    function stock(x) {
+        var state = "Stocking";
+        var id = order[x].id;
+        var json = JSON.stringify({
+            "id": id,
+            "state":state,
+        });
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/admin/changeState',
+            contentType: "application/json",
+            data: json,
+            success:function (data) {
+                if(data.success)
+                {
+                    alert(data.message);
+                    window.location.reload();
+                }
+                else
+                {alert(data.message);
+                }
+            }
+        });
+    }
+
+    function complete(x) {
+        var state = "Complete";
+        var id = order[x].id;
+        var json = JSON.stringify({
+            "id": id,
+            "state":state,
+        });
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/admin/changeState',
+            contentType: "application/json",
+            data: json,
+            success:function (data) {
+                if(data.success)
+                {
+                    alert(data.message);
+                    window.location.reload();
+                }
+                else
+                {alert(data.message);
+                }
+            }
+        });
+    }
+
+
+</script>
 
 </body>
 </html>

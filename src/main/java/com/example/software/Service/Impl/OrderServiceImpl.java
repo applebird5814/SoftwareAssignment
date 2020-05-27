@@ -6,6 +6,7 @@ import com.example.software.Service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service("orderServiceImpl")
@@ -33,11 +34,8 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public boolean addAddressAndDeliverOption(int id,String address,String deliverOption) {
-        if(orderDao.findById(id).isPresent()) {
-            orderDao.updateAddressAndDeliverOption(id,address,deliverOption);
-            return true;
-        }
-        return false;
+    public List<DiaryOrder> getAllOrder() {
+        return orderDao.findAll();
     }
+
 }
