@@ -129,13 +129,9 @@
                 <button type="button" class="btn btn-secondary btn-block " onclick="toCart()">Trolley</button>
             </div>
         </div>
-
     </div>
 </div>
 <script>
-    function toCart() {
-        window.location.href = "shoppingCart"
-    }
 
     function submit() {
         var cover = document.getElementById("selectCover").value;
@@ -152,7 +148,7 @@
         $.ajax({
             type: "POST",
             dataType: "json",
-            url: 'order/addDiary',
+            url: '/order/addDiary',
             contentType: "application/json",
             data: json,
             success: function (data) {
@@ -163,6 +159,10 @@
                 }
             }
         });
+    }
+
+    function toCart() {
+        window.location.href = "/order/shoppingCart";
     }
 
 </script>

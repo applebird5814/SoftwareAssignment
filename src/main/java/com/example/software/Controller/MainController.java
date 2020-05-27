@@ -51,18 +51,10 @@ public class MainController {
     }
 
 
-
     @RequestMapping("/AddAddressAndDeliverOption")
     public String AddAddressAndDeliverOption()
     {
         return "AddAddressAndDeliverOption";
-    }
-
-
-    @RequestMapping("/BuyDiary")
-    public String Customization()
-    {
-        return "BuyDiary";
     }
 
 

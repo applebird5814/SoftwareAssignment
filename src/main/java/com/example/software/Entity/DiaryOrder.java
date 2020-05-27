@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 @Entity
 public class DiaryOrder {
     @Id
-    @GeneratedValue
     private int id;
     @NotNull
     private String userId;

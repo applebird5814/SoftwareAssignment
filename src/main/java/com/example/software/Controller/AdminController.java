@@ -72,7 +72,6 @@ public class AdminController {
         }
     }
 
-
     @RequestMapping("/editDiary")
     public String editDiary(Model model, HttpServletRequest httpServletRequest){
         if(!validation(httpServletRequest))
@@ -103,7 +102,6 @@ public class AdminController {
         }
         return false;
     }
-
 
     @ResponseBody
     @RequestMapping("/logout")
@@ -200,7 +198,6 @@ public class AdminController {
 
     }
 
-
     @RequestMapping("/addNewAdmin")
     public String addNewAdmin(HttpServletRequest httpServletRequest)
     {
@@ -226,6 +223,16 @@ public class AdminController {
         model.addAttribute("User",new Gson().toJson(userService.findAll()));
 
         return "ManageAccount";
+    }
+
+    @RequestMapping("/manageOrder")
+    public String manageOrder(HttpServletRequest httpServletRequest,Model model){
+        if(!validation(httpServletRequest))
+        {
+            return "AdminLogin";
+        }
+
+        return "ManageOrder";
     }
 
     @ResponseBody

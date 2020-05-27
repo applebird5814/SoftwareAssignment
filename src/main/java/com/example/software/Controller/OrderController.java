@@ -11,7 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
+import java.util.UUID;
 
 @RequestMapping("/order")
 @Controller
@@ -23,12 +29,50 @@ public class OrderController {
 
     @ResponseBody
     @RequestMapping("/addDiary")
-    public String addDiary(Model model, @RequestBody Diary diary){
-        //添加各种选项的值
-        //返回页面
-        System.out.println("Data");
-        System.out.println(diary);
-        return "addDiary";
+    public String addDiary(@RequestBody Diary diary, HttpServletRequest httpServletRequest){
+        ArrayList<Diary> list;
+        diary.setId((int)System.currentTimeMillis() / 1000);
+        HttpSession httpSession =httpServletRequest.getSession();
+        try{
+            list=(ArrayList<Diary>) httpSession.getAttribute("items");
+            if(list==null)
+            {
+                list=new ArrayList<>();
+            }
+            list.add(diary);
+            System.out.println("add " + diary);
+            httpSession.setAttribute("items",list);
+            httpSession.setMaxInactiveInterval(30*60);
+            return new Gson().toJson(new Response(true,"add success"));
+        }catch (Exception e)
+        {
+
+        }
+        return new Gson().toJson(new Response(false,"add fail"));
+    }
+
+    @ResponseBody
+    @RequestMapping("/removeDiary")
+    public String removeDiary(HttpServletRequest httpServletRequest, @RequestParam("id")int id){
+        ArrayList<Diary> list;
+        HttpSession httpSession =httpServletRequest.getSession();
+        try{
+            list=(ArrayList<Diary>) httpSession.getAttribute("items");
+            for(int i=0;i<list.size();i++)
+            {
+                if(list.get(i).getId()==id)
+                {
+                    System.out.println("remove " + list.get(i));
+                    list.remove(i);
+                    break;
+                }
+            }
+            return new Gson().toJson(new Response(true,"remove success"));
+        }catch (Exception e)
+        {
+
+        }
+        return new Gson().toJson(new Response(false,"remove fail"));
     }
 
     @ResponseBody
@@ -40,9 +84,9 @@ public class OrderController {
     }
 
     @RequestMapping("/shoppingCart")
-    public String shoppingCart(){
-        //将所有session中的日记以及数量展示在web中
-        //返回页面
+    public String shoppingCart(HttpServletRequest httpServletRequest,Model model){
+        HttpSession httpSession =httpServletRequest.getSession();
+        model.addAttribute("Products",new Gson().toJson(httpSession.getAttribute("items")));
         return "shoppingCart";
     }
 

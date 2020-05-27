@@ -32,7 +32,15 @@ public class UserController {
     @Qualifier("diaryServiceImpl")
     DiaryService diaryService;
 
-
+    @RequestMapping("/viewDiary")
+    public String Customization(HttpServletRequest httpServletRequest)
+    {
+        if(!validation(httpServletRequest))
+        {
+            return "Login";
+        }
+        return "BuyDiary";
+    }
 
     @ResponseBody
     @RequestMapping("/login")
@@ -84,20 +92,6 @@ public class UserController {
     public String history(Model model){
         // To do
         return "History";
-    }
-
-
-    @RequestMapping("/viewDiary")
-    public String viewDiary(Model model, HttpServletRequest httpServletRequest)
-    {
-        if(!validation(httpServletRequest))
-        {
-            return "Login";
-        }
-        model.addAttribute(new Gson().toJson(diaryService.getCovers()));
-        model.addAttribute(new Gson().toJson(diaryService.getPaperColors()));
-        model.addAttribute(new Gson().toJson(diaryService.getTypeOfPapers()));
-        return "ViewDiary";
     }
 
     private boolean validation(HttpServletRequest httpServletRequest){

@@ -12,36 +12,32 @@
 
 <div>
     <div class="container">
-        <div class="row justify-content-center">
-            <form class="form-signIn">
-                <div class="text-center mb-4">
-                    <h1 class="h3 mb-3 font-weight-normal">Test for cover</h1>
-                </div>
-
+        <div class="row">
+            <div class="col-md-4">
                 <div class="form-label-group">
                     <input type="text" id="inputCover" class="form-control" placeholder="cover" required autofocus>
                     <label for="inputCover">Cover</label>
                 </div>
-
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="addCover()">Add Cover</button>
+            </div>
+            <div class="col-md-4">
                 <div class="form-label-group">
                     <input type="text" id="inputPaperColor" class="form-control" placeholder="PaperColor" required
                            autofocus>
                     <label for="inputPaperColor">PaperColor</label>
                 </div>
-
+                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="addPaperColor()">Add Paper Color</button>
+            </div>
+            <div class="col-md-4">
                 <div class="form-label-group">
                     <input type="text" id="inputTypeofPaper" class="form-control" placeholder="TypeofPaper" required
                            autofocus>
                     <label for="inputTypeofPaper">PaperType</label>
                 </div>
-
-                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="addcover()">Add Cover</button>
-                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="addpapercolor()">Add Paper
-                    Color
-                </button>
-                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="addpapertype()">Add Paper Type
-                </button>
-
+                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="addPaperType()">Add Paper Type</button>
+            </div>
+        </div>
+        <div class="row justify-content-center">
 
                 <div class="form-label-group">
                     <input type="text" id="deleteCover" class="form-control" placeholder="cover for delete" required
@@ -89,7 +85,7 @@
 
 
 <script>
-    function addcover() {
+    function addCover() {
         var inputCover = document.getElementById("inputCover").value;
 
         var id = 1;
@@ -106,17 +102,15 @@
             success: function (data) {
                 if (data.success) {
                     alert(data.message);
-
+                    window.location.reload();
                 } else {
                     alert(data.message);
                 }
             }
         });
-
-
     }
 
-    function addpapercolor() {
+    function addPaperColor() {
         var color = document.getElementById("inputPaperColor").value;
 
         var id = 1;
@@ -132,8 +126,8 @@
             data: json,
             success: function (data) {
                 if (data.success) {
+                    window.location.reload();
                     alert(data.message);
-
                 } else {
                     alert(data.message);
                 }
@@ -141,7 +135,7 @@
         });
     }
 
-    function addpapertype() {
+    function addPaperType() {
         var inputTypeofPaper = document.getElementById("inputTypeofPaper").value;
 
         var id = 1;
@@ -157,8 +151,8 @@
             data: json,
             success: function (data) {
                 if (data.success) {
+                    window.location.reload();
                     alert(data.message);
-
                 } else {
                     alert(data.message);
                 }
