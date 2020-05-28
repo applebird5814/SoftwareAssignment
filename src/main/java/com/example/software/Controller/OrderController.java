@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.UUID;
 
 @RequestMapping("/order")
 @Controller
@@ -103,7 +102,7 @@ public class OrderController {
         diaryOrder.setTime(new Date().toString());
         User user =(User)httpSession.getAttribute("user");
         diaryOrder.setUserId(user.getId());
-        diaryOrder.setState("waiting for address");
+        diaryOrder.setState("Waiting for adding address");
         httpSession.setAttribute("order",diaryOrder);
         model.addAttribute("Address",new Gson().toJson(addressService.findByUserId(user.getId())));
         return "AddAddressAndDeliverOption";
@@ -116,7 +115,7 @@ public class OrderController {
         DiaryOrder order = (DiaryOrder) httpSession.getAttribute("order");
         order.setAddress(diaryOrder.getAddress());
         order.setDeliverOption(diaryOrder.getDeliverOption());
-        order.setState("waiting for deliver");
+        order.setState("Waiting for processing");
         boolean b = orderService.createOrder(order);
         if(b){
             ArrayList<Diary> list=(ArrayList<Diary>) httpSession.getAttribute("items");

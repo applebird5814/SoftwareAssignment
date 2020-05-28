@@ -49,7 +49,7 @@
     var address = $.parseJSON(document.getElementById("address").value);
 
         for (var i = 0; i < address.length; i++) {
-            var addressString = address[i].address+address[i].urban+address[i].state+address[i].postCode;
+            var addressString = address[i].address+"  "+address[i].urban+"  "+address[i].state+"  "+address[i].postCode;
             var single ="<option value="+addressString+">"+addressString+"</option>";
             $("#inputAddress").append(single);
         }
@@ -74,7 +74,7 @@
                 if(data.success)
                 {
                     alert(data.message);
-                    //window.location.href='/homePage';
+                    window.location.href='/homePage';
                 }
                 else
                 {

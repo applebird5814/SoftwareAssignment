@@ -181,7 +181,7 @@ public class AdminController {
     }
 
     @RequestMapping("/login")
-    public String AdminLogin()
+    public String adminLogin()
     {
         return "AdminLogin";
     }
@@ -222,7 +222,7 @@ public class AdminController {
 
     @ResponseBody
     @RequestMapping("/AdminRegister")
-    public String AdminRegister(@RequestBody @Valid Admin user, BindingResult result){
+    public String adminRegister(@RequestBody @Valid Admin user, BindingResult result){
         if(result.hasErrors()) {
             for (ObjectError error : result.getAllErrors()) {
                 System.out.println(error.getDefaultMessage());

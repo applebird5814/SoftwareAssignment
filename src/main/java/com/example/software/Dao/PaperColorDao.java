@@ -7,8 +7,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.Optional;
 
 public interface PaperColorDao extends JpaRepository<PaperColor,String> {
+
     Optional<PaperColor> findPaperColorByColor(String color);
+
     Optional<PaperColor> findPaperColorById(String id);
-    void deletePaperColorByColor(String color);
+
+    @Override
     void deleteById(String id);
 }

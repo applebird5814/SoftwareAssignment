@@ -38,7 +38,7 @@ public class UserController {
     AddressService addressService;
 
     @RequestMapping("/viewDiary")
-    public String Customization(HttpServletRequest httpServletRequest,Model model)
+    public String customization(HttpServletRequest httpServletRequest,Model model)
     {
         if(!validation(httpServletRequest))
         {

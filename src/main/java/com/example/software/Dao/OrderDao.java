@@ -11,6 +11,7 @@ import java.util.Optional;
 
 public interface OrderDao extends JpaRepository<DiaryOrder,Integer> {
 
+    @Override
     List<DiaryOrder> findAll();
 
     Optional<DiaryOrder> findById(int id);

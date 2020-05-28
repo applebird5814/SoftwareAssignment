@@ -8,6 +8,7 @@ import java.util.Optional;
 public interface AdminDao extends JpaRepository<Admin,String> {
     Optional<Admin> findByUsernameAndPassword(String username,String password);
 
+    @Override
     Optional<Admin> findById(String id);
 
     Optional<Admin> findByUsername(String username);
