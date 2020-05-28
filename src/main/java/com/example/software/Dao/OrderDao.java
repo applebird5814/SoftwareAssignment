@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
 
-public interface OrderDao extends JpaRepository<DiaryOrder,Integer> {
+public interface OrderDao extends JpaRepository<DiaryOrder, Integer> {
 
     @Override
     List<DiaryOrder> findAll();
@@ -21,10 +21,10 @@ public interface OrderDao extends JpaRepository<DiaryOrder,Integer> {
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update DiaryOrder a set a.address=?2,a.deliverOption=?3 where a.id=?1")
-    void updateAddressAndDeliverOption(int id,String address,String deliverOption);
+    void updateAddressAndDeliverOption(int id, String address, String deliverOption);
 
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update DiaryOrder a set a.state=?2 where a.id=?1")
-    void updateStatus(int id,String status);
+    void updateStatus(int id, String status);
 }

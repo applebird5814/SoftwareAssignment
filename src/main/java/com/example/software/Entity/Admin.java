@@ -14,7 +14,7 @@ public class Admin {
     private String id;
     @NotNull
     @Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]{3,15}")
-    @Column(name="username",unique = true)
+    @Column(name = "username", unique = true)
     private String username;
     @NotNull
     @Pattern(regexp = "[a-zA-Z0-9]{6,15}")

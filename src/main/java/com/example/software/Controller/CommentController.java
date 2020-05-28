@@ -24,45 +24,37 @@ public class CommentController {
 
     @ResponseBody
     @RequestMapping("/addComment")
-    private String addComment(@RequestBody @Valid Comment comment)
-    {
+    private String addComment(@RequestBody @Valid Comment comment) {
 
         Boolean b = commentService.createComment(comment);
-        if(b)
-        {
-            return new Gson().toJson(new Response(true,"add a new comment Success!"));
-        }
-        else
-        {
-            return new Gson().toJson(new Response(false,"comment id already exist！"));
+        if (b) {
+            return new Gson().toJson(new Response(true, "add a new comment Success!"));
+        } else {
+            return new Gson().toJson(new Response(false, "comment id already exist！"));
         }
 
     }
 
     @ResponseBody
     @RequestMapping("/deleteComment")
-    public String deleteUser(@RequestBody Comment comment)
-    {
+    public String deleteUser(@RequestBody Comment comment) {
         //添加所有user账户和admin账户
         //前端提供添加管理员功能以及删除用户功能
 
         //删除用户
         Boolean b = commentService.deleteComment(comment);
 
-        if(b)
-        {
-            String welcome = "Delete Success!"+ comment.getId() +" has been deleted";
-            return new Gson().toJson(new Response(true,welcome));
-        }
-        else
-        {
-            return new Gson().toJson(new Response(false,"Delete Fail"));
+        if (b) {
+            String welcome = "Delete Success!" + comment.getId() + " has been deleted";
+            return new Gson().toJson(new Response(true, welcome));
+        } else {
+            return new Gson().toJson(new Response(false, "Delete Fail"));
         }
 
     }
 
     @RequestMapping("/viewComment")
-    private String viewComment(Model model){
+    private String viewComment(Model model) {
         //添加commentall信息
         //返回页面
         // test

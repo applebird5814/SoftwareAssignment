@@ -8,7 +8,7 @@ public interface OrderService {
 
     boolean createOrder(DiaryOrder diaryOrder);
 
-    boolean changeOrderState(int id,String state);
+    boolean changeOrderState(int id, String state);
 
     List<DiaryOrder> getAllOrder();
 

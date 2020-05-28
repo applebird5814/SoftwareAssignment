@@ -1,9 +1,11 @@
 package com.example.software.Service.Impl;
+
 import com.example.software.Dao.AddressDao;
 import com.example.software.Entity.Address;
 import com.example.software.Service.AddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -13,18 +15,20 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     private AddressDao addressDao;
 
+    @Transactional
     @Override
     public boolean createAddress(Address address) {
-        if(addressDao.findById(address.getId()).isPresent()){
+        if (addressDao.findById(address.getId()).isPresent()) {
             return false;
         }
         addressDao.saveAndFlush(address);
         return true;
     }
 
+    @Transactional
     @Override
     public boolean deleteAddress(String id) {
-        if(addressDao.findById(id).isPresent()){
+        if (addressDao.findById(id).isPresent()) {
             addressDao.deleteAddressById(id);
             return true;
         }

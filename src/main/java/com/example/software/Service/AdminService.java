@@ -9,7 +9,7 @@ public interface AdminService {
 
     boolean createAdmin(Admin admin);
 
-    Optional<Admin> login(String username,String password);
+    Optional<Admin> login(String username, String password);
 
     List<Admin> findAll();
 

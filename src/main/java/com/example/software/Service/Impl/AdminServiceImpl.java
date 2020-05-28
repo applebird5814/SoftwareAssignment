@@ -4,10 +4,10 @@ package com.example.software.Service.Impl;
 import com.example.software.Dao.AdminDao;
 import com.example.software.Dao.UserDao;
 import com.example.software.Entity.Admin;
-import com.example.software.Entity.User;
 import com.example.software.Service.AdminService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -19,10 +19,10 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private UserDao userDao;
 
+    @Transactional
     @Override
     public boolean createAdmin(Admin admin) {
-        if(adminDao.findByUsername(admin.getUsername()).isPresent())
-        {
+        if (adminDao.findByUsername(admin.getUsername()).isPresent()) {
             return false;
         }
         adminDao.saveAndFlush(admin);
@@ -32,7 +32,7 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Optional<Admin> login(String username, String password) {
-        return adminDao.findByUsernameAndPassword(username,password);
+        return adminDao.findByUsernameAndPassword(username, password);
     }
 
     @Override
@@ -40,20 +40,20 @@ public class AdminServiceImpl implements AdminService {
         return adminDao.findAll();
     }
 
+    @Transactional
     @Override
     public boolean deleteUserById(String id) {
-        if(userDao.findById(id).isPresent())
-        {
+        if (userDao.findById(id).isPresent()) {
             userDao.deleteById(id);
             return true;
         }
         return false;
     }
 
+    @Transactional
     @Override
     public boolean deleteAdminById(String id) {
-        if(adminDao.findById(id).isPresent())
-        {
+        if (adminDao.findById(id).isPresent()) {
             adminDao.deleteById(id);
             return true;
         }

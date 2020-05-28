@@ -14,8 +14,6 @@ public class CommentServiceImpl implements CommentService {
     private CommentDao commentDao;
 
 
-
-
     @Override
     public Comment getComment(String id) {
         return commentDao.findById(id).get();
@@ -24,8 +22,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean createComment(Comment comment) {
-        if(commentDao.findById(comment.getId()).isPresent())
-        {
+        if (commentDao.findById(comment.getId()).isPresent()) {
             return false;
         }
         commentDao.saveAndFlush(comment);
@@ -34,8 +31,7 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public boolean deleteComment(Comment comment) {
-        if(commentDao.findById(comment.getId()).isPresent())
-        {
+        if (commentDao.findById(comment.getId()).isPresent()) {
             commentDao.delete(comment);
             return true;
         }

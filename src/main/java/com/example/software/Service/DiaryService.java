@@ -17,12 +17,15 @@ public interface DiaryService {
     List<TypeOfPaper> getTypeOfPapers();
 
     boolean addCover(Cover cover);
+
     boolean deleteCover(String id);
 
     boolean addPaperColor(PaperColor color);
+
     boolean deletePaperColor(String id);
 
     boolean addTypeOfPaper(TypeOfPaper typeOfPaper);
+
     boolean deleteTypeOfPaper(String id);
 
     boolean addDiary(ArrayList<Diary> list);

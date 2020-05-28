@@ -21,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -46,90 +45,77 @@ public class UserController {
     OrderService orderService;
 
     @RequestMapping("/viewDiary")
-    public String customization(HttpServletRequest httpServletRequest,Model model)
-    {
-        if(!validation(httpServletRequest))
-        {
+    public String customization(HttpServletRequest httpServletRequest, Model model) {
+        if (!validation(httpServletRequest)) {
             return "Login";
         }
-        model.addAttribute("TypeOfPaper",new Gson().toJson(diaryService.getTypeOfPapers()));
-        model.addAttribute("Color",new Gson().toJson(diaryService.getPaperColors()));
-        model.addAttribute("Cover",new Gson().toJson(diaryService.getCovers()));
+        model.addAttribute("TypeOfPaper", new Gson().toJson(diaryService.getTypeOfPapers()));
+        model.addAttribute("Color", new Gson().toJson(diaryService.getPaperColors()));
+        model.addAttribute("Cover", new Gson().toJson(diaryService.getCovers()));
         return "BuyDiary";
     }
 
     @ResponseBody
     @RequestMapping("/login")
-    public String login(HttpServletRequest httpServletRequest, @RequestBody User user){
+    public String login(HttpServletRequest httpServletRequest, @RequestBody User user) {
         Optional<User> optionalUser = userService.login(user.getUsername(), user.getPassword());
         if (optionalUser.isPresent()) {
-            HttpSession httpSession =httpServletRequest.getSession();
-            httpSession.setAttribute("user",optionalUser.get());
+            HttpSession httpSession = httpServletRequest.getSession();
+            httpSession.setAttribute("user", optionalUser.get());
             // 30 minutes * 60 seconds
-            httpSession.setMaxInactiveInterval(30*60);
-            String welcome = "Welcome Back, "+optionalUser.get().getScreenName();
-            return new Gson().toJson(new Response(true,welcome));
+            httpSession.setMaxInactiveInterval(30 * 60);
+            String welcome = "Welcome Back, " + optionalUser.get().getScreenName();
+            return new Gson().toJson(new Response(true, welcome));
         } else {
             String error = "Your username or password is incorrect!";
-            return new Gson().toJson(new Response(false,error));
+            return new Gson().toJson(new Response(false, error));
         }
     }
 
     @ResponseBody
     @RequestMapping("/register")
-    public String register(@RequestBody @Valid User user, BindingResult result){
-        if(result.hasErrors()) {
+    public String register(@RequestBody @Valid User user, BindingResult result) {
+        if (result.hasErrors()) {
             for (ObjectError error : result.getAllErrors()) {
                 System.out.println(error.getDefaultMessage());
             }
-            return new Gson().toJson(new Response(false,"Invalid Information"));
+            return new Gson().toJson(new Response(false, "Invalid Information"));
         }
         Boolean b = userService.createUser(user);
-        if(b)
-        {
-            return new Gson().toJson(new Response(true,"Register Success!"));
-        }
-        else
-        {
-            return new Gson().toJson(new Response(false,"User already exist！"));
+        if (b) {
+            return new Gson().toJson(new Response(true, "Register Success!"));
+        } else {
+            return new Gson().toJson(new Response(false, "User already exist！"));
         }
     }
 
     @ResponseBody
     @RequestMapping("/logout")
-    public String logout(HttpServletRequest httpServletRequest)
-    {
-        HttpSession httpSession =httpServletRequest.getSession();
+    public String logout(HttpServletRequest httpServletRequest) {
+        HttpSession httpSession = httpServletRequest.getSession();
         httpSession.removeAttribute("user");
-        return new Gson().toJson(new Response(true,"Sign Out Success!"));
+        return new Gson().toJson(new Response(true, "Sign Out Success!"));
     }
 
     @RequestMapping("/history")
-    public String history(Model model,HttpServletRequest httpServletRequest){
-        if(!validation(httpServletRequest))
-        {
+    public String history(Model model, HttpServletRequest httpServletRequest) {
+        if (!validation(httpServletRequest)) {
             return "Login";
         }
-        HttpSession httpSession =httpServletRequest.getSession();
-        User user = (User)httpSession.getAttribute("user");
+        HttpSession httpSession = httpServletRequest.getSession();
+        User user = (User) httpSession.getAttribute("user");
         List<DiaryOrder> list = orderService.getAllByUserId(user.getId());
-        model.addAttribute("Order",new Gson().toJson(list));
+        model.addAttribute("Order", new Gson().toJson(list));
         return "History";
     }
 
-    private boolean validation(HttpServletRequest httpServletRequest){
+    private boolean validation(HttpServletRequest httpServletRequest) {
         HttpSession httpSession = httpServletRequest.getSession(false);
-        if(httpSession!=null)
-        {
+        if (httpSession != null) {
             try {
                 User user = (User) httpSession.getAttribute("user");
-                if(user == null)
-                {
-                    return false;
-                }
-                return true;
-            }catch (Exception e)
-            {
+                return user != null;
+            } catch (Exception e) {
 
             }
         }
@@ -137,33 +123,27 @@ public class UserController {
     }
 
     @RequestMapping("/addAddress")
-    public String addAddress(HttpServletRequest httpServletRequest)
-    {
-        if(!validation(httpServletRequest))
-        {
+    public String addAddress(HttpServletRequest httpServletRequest) {
+        if (!validation(httpServletRequest)) {
             return "Login";
         }
         return "AddAddress";
     }
 
     @RequestMapping("/viewAddress")
-    public String viewAddress(HttpServletRequest httpServletRequest,Model model)
-    {
-        if(!validation(httpServletRequest))
-        {
+    public String viewAddress(HttpServletRequest httpServletRequest, Model model) {
+        if (!validation(httpServletRequest)) {
             return "Login";
         }
-        HttpSession httpSession =httpServletRequest.getSession();
+        HttpSession httpSession = httpServletRequest.getSession();
         User user = (User) httpSession.getAttribute("user");
-        model.addAttribute("Address",new Gson().toJson(addressService.findByUserId(user.getId())));
+        model.addAttribute("Address", new Gson().toJson(addressService.findByUserId(user.getId())));
         return "ViewAddress";
     }
 
     @RequestMapping("/homePage")
-    public String homePage(HttpServletRequest httpServletRequest)
-    {
-        if(!validation(httpServletRequest))
-        {
+    public String homePage(HttpServletRequest httpServletRequest) {
+        if (!validation(httpServletRequest)) {
             return "Login";
         }
         return "HomePage";

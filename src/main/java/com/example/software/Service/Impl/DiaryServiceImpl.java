@@ -12,8 +12,7 @@ import com.example.software.Entity.DiaryDetail.TypeOfPaper;
 import com.example.software.Service.DiaryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -47,24 +46,24 @@ public class DiaryServiceImpl implements DiaryService {
         return typeOfPaperDao.findAll();
     }
 
+    @Transactional
     @Override
     public boolean addCover(Cover cover) {
-        if(coverDao.findCoverByCoverName(cover.getCoverName()).isPresent())
-        {
+        if (coverDao.findCoverByCoverName(cover.getCoverName()).isPresent()) {
             return false;
         }
         coverDao.saveAndFlush(cover);
         return true;
     }
 
+    @Transactional
     @Override
     public boolean deleteCover(String id) {
-         System.out.println(id);
-         System.out.println(coverDao.findCoverByCoverName("111").isPresent());
-         System.out.println(coverDao.findCoverById(id).isPresent());
-         System.out.println(coverDao.findCoverById(id).toString());
-        if(coverDao.findCoverById(id).isPresent())
-        {
+        System.out.println(id);
+        System.out.println(coverDao.findCoverByCoverName("111").isPresent());
+        System.out.println(coverDao.findCoverById(id).isPresent());
+        System.out.println(coverDao.findCoverById(id).toString());
+        if (coverDao.findCoverById(id).isPresent()) {
             coverDao.deleteById(id);
             coverDao.flush();
             return true;
@@ -73,20 +72,20 @@ public class DiaryServiceImpl implements DiaryService {
     }
 
 
+    @Transactional
     @Override
     public boolean addPaperColor(PaperColor color) {
-        if(paperColorDao.findPaperColorByColor(color.getColor()).isPresent())
-        {
+        if (paperColorDao.findPaperColorByColor(color.getColor()).isPresent()) {
             return false;
         }
         paperColorDao.saveAndFlush(color);
         return true;
     }
 
+    @Transactional
     @Override
     public boolean deletePaperColor(String id) {
-        if(paperColorDao.findPaperColorById(id).isPresent())
-        {
+        if (paperColorDao.findPaperColorById(id).isPresent()) {
             System.out.println(id);
             paperColorDao.deleteById(id);
             paperColorDao.flush();
@@ -95,10 +94,10 @@ public class DiaryServiceImpl implements DiaryService {
         return false;
     }
 
+    @Transactional
     @Override
     public boolean addTypeOfPaper(TypeOfPaper typeOfPaper) {
-        if(typeOfPaperDao.findTypeOfPaperByTypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent())
-        {
+        if (typeOfPaperDao.findTypeOfPaperByTypeOfPaper(typeOfPaper.getTypeOfPaper()).isPresent()) {
             return false;
         }
         System.out.println(typeOfPaper.getId());
@@ -107,6 +106,7 @@ public class DiaryServiceImpl implements DiaryService {
         return true;
     }
 
+    @Transactional
     @Override
     public boolean deleteTypeOfPaper(String id) {
         if (typeOfPaperDao.findTypeOfPaperById(id).isPresent()) {
@@ -118,6 +118,7 @@ public class DiaryServiceImpl implements DiaryService {
         return false;
     }
 
+    @Transactional
     @Override
     public boolean addDiary(ArrayList<Diary> list) {
         diaryDao.saveAll(list);

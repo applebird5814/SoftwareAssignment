@@ -40,102 +40,95 @@ public class OrderController {
 
     @ResponseBody
     @RequestMapping("/addDiary")
-    public String addDiary(@RequestBody Diary diary, HttpServletRequest httpServletRequest){
+    public String addDiary(@RequestBody Diary diary, HttpServletRequest httpServletRequest) {
         ArrayList<Diary> list;
-        diary.setId((int)System.currentTimeMillis() / 1000);
-        HttpSession httpSession =httpServletRequest.getSession();
-        try{
-            list=(ArrayList<Diary>) httpSession.getAttribute("items");
-            if(list==null)
-            {
-                list=new ArrayList<>();
+        diary.setId((int) System.currentTimeMillis() / 1000);
+        HttpSession httpSession = httpServletRequest.getSession();
+        try {
+            list = (ArrayList<Diary>) httpSession.getAttribute("items");
+            if (list == null) {
+                list = new ArrayList<>();
             }
             list.add(diary);
             System.out.println("add " + diary);
-            httpSession.setAttribute("items",list);
-            httpSession.setMaxInactiveInterval(30*60);
-            return new Gson().toJson(new Response(true,"add success"));
-        }catch (Exception e)
-        {
+            httpSession.setAttribute("items", list);
+            httpSession.setMaxInactiveInterval(30 * 60);
+            return new Gson().toJson(new Response(true, "add success"));
+        } catch (Exception e) {
 
         }
-        return new Gson().toJson(new Response(false,"add fail"));
+        return new Gson().toJson(new Response(false, "add fail"));
     }
 
     @ResponseBody
     @RequestMapping("/removeDiary")
-    public String removeDiary(HttpServletRequest httpServletRequest, @RequestParam("id")int id){
+    public String removeDiary(HttpServletRequest httpServletRequest, @RequestParam("id") int id) {
         ArrayList<Diary> list;
-        HttpSession httpSession =httpServletRequest.getSession();
-        try{
-            list=(ArrayList<Diary>) httpSession.getAttribute("items");
-            for(int i=0;i<list.size();i++)
-            {
-                if(list.get(i).getId()==id)
-                {
+        HttpSession httpSession = httpServletRequest.getSession();
+        try {
+            list = (ArrayList<Diary>) httpSession.getAttribute("items");
+            for (int i = 0; i < list.size(); i++) {
+                if (list.get(i).getId() == id) {
                     System.out.println("remove " + list.get(i));
                     list.remove(i);
                     break;
                 }
             }
-            return new Gson().toJson(new Response(true,"remove success"));
-        }catch (Exception e)
-        {
+            return new Gson().toJson(new Response(true, "remove success"));
+        } catch (Exception e) {
 
         }
-        return new Gson().toJson(new Response(false,"remove fail"));
+        return new Gson().toJson(new Response(false, "remove fail"));
     }
 
 
     @RequestMapping("/shoppingCart")
-    public String shoppingCart(HttpServletRequest httpServletRequest,Model model){
-        HttpSession httpSession =httpServletRequest.getSession();
-        model.addAttribute("Products",new Gson().toJson(httpSession.getAttribute("items")));
+    public String shoppingCart(HttpServletRequest httpServletRequest, Model model) {
+        HttpSession httpSession = httpServletRequest.getSession();
+        model.addAttribute("Products", new Gson().toJson(httpSession.getAttribute("items")));
         return "shoppingCart";
     }
 
     @RequestMapping("/checkout")
-    public String checkOut(HttpServletRequest httpServletRequest,Model model){
-        HttpSession httpSession =httpServletRequest.getSession();
+    public String checkOut(HttpServletRequest httpServletRequest, Model model) {
+        HttpSession httpSession = httpServletRequest.getSession();
         DiaryOrder diaryOrder = new DiaryOrder();
-        diaryOrder.setId((int)System.currentTimeMillis()/1000);
+        diaryOrder.setId((int) System.currentTimeMillis() / 1000);
         diaryOrder.setTime(new Date().toString());
-        User user =(User)httpSession.getAttribute("user");
+        User user = (User) httpSession.getAttribute("user");
         diaryOrder.setUserId(user.getId());
         diaryOrder.setState("Waiting for adding address");
-        httpSession.setAttribute("order",diaryOrder);
-        model.addAttribute("Address",new Gson().toJson(addressService.findByUserId(user.getId())));
+        httpSession.setAttribute("order", diaryOrder);
+        model.addAttribute("Address", new Gson().toJson(addressService.findByUserId(user.getId())));
         return "AddAddressAndDeliverOption";
     }
 
     @ResponseBody
     @RequestMapping("/addAddressAndDeliverOption")
-    public String addAddressAndDeliverOption(HttpServletRequest httpServletRequest,@RequestBody DiaryOrder diaryOrder){
-        HttpSession httpSession =httpServletRequest.getSession();
+    public String addAddressAndDeliverOption(HttpServletRequest httpServletRequest, @RequestBody DiaryOrder diaryOrder) {
+        HttpSession httpSession = httpServletRequest.getSession();
         DiaryOrder order = (DiaryOrder) httpSession.getAttribute("order");
         order.setAddress(diaryOrder.getAddress());
         order.setDeliverOption(diaryOrder.getDeliverOption());
         order.setState("Waiting for processing");
         boolean b = orderService.createOrder(order);
-        if(b){
-            ArrayList<Diary> list=(ArrayList<Diary>) httpSession.getAttribute("items");
-            for(int i=0;i<list.size();i++)
-            {
+        if (b) {
+            ArrayList<Diary> list = (ArrayList<Diary>) httpSession.getAttribute("items");
+            for (int i = 0; i < list.size(); i++) {
                 list.get(i).setOrderId(order.getId());
             }
             diaryService.addDiary(list);
             httpSession.removeAttribute("items");
-            return new Gson().toJson(new Response(true,"Your order has been placed"));
-        }
-        else {
-            return new Gson().toJson(new Response(false,"Something wrong happens, please try again"));
+            return new Gson().toJson(new Response(true, "Your order has been placed"));
+        } else {
+            return new Gson().toJson(new Response(false, "Something wrong happens, please try again"));
         }
     }
 
 
     @ResponseBody
     @RequestMapping("/paymentSuccess")
-    public String finishOrder(@RequestBody DiaryOrder diaryOrder){
+    public String finishOrder(@RequestBody DiaryOrder diaryOrder) {
 
         return "gson";
     }

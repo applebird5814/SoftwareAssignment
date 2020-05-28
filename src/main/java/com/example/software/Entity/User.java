@@ -16,7 +16,7 @@ public class User {
     private String id;
     @NotNull
     @Pattern(regexp = "[a-zA-Z][a-zA-Z0-9]{3,15}")
-    @Column(name="username",unique = true)
+    @Column(name = "username", unique = true)
     private String username;
     @NotNull
     @Pattern(regexp = "[a-zA-Z0-9]{6,15}")
@@ -28,7 +28,7 @@ public class User {
     @Pattern(regexp = "[0-9]{11}")
     private String telephone;
     @Email
-    @Column(name="mail_address",unique = true)
+    @Column(name = "mail_address", unique = true)
     private String mailAddress;
 
     public String getId() {
@@ -71,20 +71,20 @@ public class User {
         return screenName;
     }
 
-    public String getTelephone() {
-        return telephone;
-    }
-
-    public String getMailAddress() {
-        return mailAddress;
-    }
-
     public void setScreenName(String screenName) {
         this.screenName = screenName;
     }
 
+    public String getTelephone() {
+        return telephone;
+    }
+
     public void setTelephone(String telephone) {
         this.telephone = telephone;
+    }
+
+    public String getMailAddress() {
+        return mailAddress;
     }
 
     public void setMailAddress(String mailAddress) {
