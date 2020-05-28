@@ -38,7 +38,7 @@
                 "        <button type='button' class=\"btn-sm btn-danger\" onclick=\"removeAdmin(" + i + ")\">Delete</button>"+
                 "        </div>\n" +
                 "    </div>";
-            var adminSum = adminSum + single;
+            adminSum = adminSum + single;
         }
         document.getElementById("adminList").innerHTML=adminSum;
         var userSum = "";
@@ -50,7 +50,7 @@
                 "        <button type='button' class=\"btn-sm btn-danger\" onclick=\"removeUser(" + i + ")\">Delete</button>"+
                 "        </div>\n" +
             "    </div>";
-            var userSum = userSum + single;
+            userSum = userSum + single;
         }
         document.getElementById("userList").innerHTML=userSum;
 
