@@ -20,16 +20,6 @@ public class AdminServiceImpl implements AdminService {
     private UserDao userDao;
 
     @Override
-    public Admin getUser(String id) {
-        return adminDao.findById(id).get();
-    }
-
-    @Override
-    public Admin getUserByUsername(String username) {
-        return adminDao.findByUsername(username).get();
-    }
-
-    @Override
     public boolean createAdmin(Admin admin) {
         if(adminDao.findByUsername(admin.getUsername()).isPresent())
         {
@@ -39,17 +29,6 @@ public class AdminServiceImpl implements AdminService {
         return true;
     }
 
-    @Override
-    public boolean deleteAdmin(Admin admin) {
-
-        if(adminDao.findByUsername(admin.getUsername()).isPresent())
-        {
-            adminDao.delete(admin);
-            return true;
-        }
-        return false;
-
-    }
 
     @Override
     public Optional<Admin> login(String username, String password) {
@@ -65,7 +44,7 @@ public class AdminServiceImpl implements AdminService {
     public boolean deleteUserById(String id) {
         if(userDao.findById(id).isPresent())
         {
-            userDao.deleteUserById(id);
+            userDao.deleteById(id);
             return true;
         }
         return false;

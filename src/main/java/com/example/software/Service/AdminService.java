@@ -6,13 +6,8 @@ import java.util.List;
 import java.util.Optional;
 
 public interface AdminService {
-    Admin getUser(String id);
-
-    Admin getUserByUsername(String username);
 
     boolean createAdmin(Admin admin);
-
-    boolean deleteAdmin(Admin admin);
 
     Optional<Admin> login(String username,String password);
 

@@ -68,7 +68,8 @@
 
         function removeUser(i) {
             var id = user[i].id;
-            var url = '/admin/deleteUser??id=' + id;
+            var url = '/admin/deleteUser?id=' + id;
+            console.log(url);
             $.ajax({
                 type: "POST",
                 dataType: "json",
