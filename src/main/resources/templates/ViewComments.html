@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Comments</title>
+</head>
+<body>
+<input type="hidden" id="comments" th:value="${Comments}"/>
+
+</div>
+<div class="comment-main">
+    <br><br>
+    <h3>Comment Area</h3><br>
+    <article id="viewComments"></article>
+</div>
+<div class="comment-add" id="commentAdd"></div>
+
+
+<script>
+
+    var comments=$.parseJSON(document.getElementById("comments").value);
+    if(comments.length==0)
+    {
+        document.getElementById("viewComments").innerHTML=("<p>It's a pity that this article hasn't commented yet.<\p>");
+    }
+    else
+    {
+        var sum = "";
+        for(var i=0;i<comments.length;i++)
+        {
+            var single= "<div class='row justify-content-between'>" +
+                "<div>Author: "+comments[i].author+"<br>"+
+                "Post at: "+comments[i].createDate+"<br>"+
+                comments[i].content+"</div>" +
+                "</div><br>";
+            var sum = sum + single;
+            console.log(single);
+        }
+        document.getElementById("viewComments").innerHTML=sum;
+    }
+
+</script>
+
+</body>
+</html>
