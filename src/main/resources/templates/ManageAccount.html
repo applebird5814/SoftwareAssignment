@@ -35,7 +35,7 @@
                 "   <div class=\"row\">\n" +
                 "        <div class=\"col-md-9\">"+admin[i].username+"</div>\n" +
                 "        <div class=\"col-md-3\">\n" +
-                "            <a href=\"/admin/deleteAdmin?id="+admin[i].id+"\">删除该账号</a>\n" +
+                "        <button type='button' class=\"btn-sm btn-danger\" onclick=\"removeAdmin(" + i + ")\">Delete</button>"+
                 "        </div>\n" +
                 "    </div>";
             var adminSum = adminSum + single;
@@ -46,14 +46,53 @@
             var single =
                 "   <div class=\"row\">\n" +
                 "        <div class=\"col-md-9\">"+user[i].username+"</div>\n" +
-            "        <div class=\"col-md-3\">\n" +
-            "            <a href=\"/admin/deleteUser?id="+user[i].id+"\">删除该账号</a>\n" +
-            "        </div>\n" +
+                "        <div class=\"col-md-3\">\n" +
+                "        <button type='button' class=\"btn-sm btn-danger\" onclick=\"removeUser(" + i + ")\">Delete</button>"+
+                "        </div>\n" +
             "    </div>";
             var userSum = userSum + single;
         }
         document.getElementById("userList").innerHTML=userSum;
 
+        function removeUser(i) {
+            var id = user[i].id;
+            var url = '/admin/deleteUser??id=' + id;
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: url,
+                contentType: "application/json",
+                data: "",
+                success: function (data) {
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
+
+        function removeAdmin(i) {
+            var id = admin[i].id;
+            var url = '/admin/deleteAdmin?id=' + id;
+            $.ajax({
+                type: "POST",
+                dataType: "json",
+                url: url,
+                contentType: "application/json",
+                data: "",
+                success: function (data) {
+                    if (data.success) {
+                        alert(data.message);
+                        window.location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            });
+        }
     </script>
 
 </body>

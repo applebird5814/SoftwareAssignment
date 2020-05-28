@@ -15,17 +15,40 @@
 <script>
     $("#navbar-common").load("/common/Navbar.html");
 </script>
-    HomePage
-    <br>
-    <a href="/user/viewDiary">去购物</a>
-    <br>
-    <a href="/order/shoppingCart">查看购物车</a>
-    <br>
-    <a href="/user/addAddress">添加地址</a>
-    <br>
-    <a href="/user/viewAddress">观看和删除地址</a>
-    <br>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">Go Shopping!</h5>
+        <div class="card-body">
+            <p class="card-text">Click here to pick our latest, best and highest quality custom diary!</p>
+            <a href="/user/viewDiary" class="btn btn-primary">Go Shopping!</a>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header">Shopping Cart</h5>
+        <div class="card-body">
+
+            <p class="card-text">Browse your shopping cart, you can delete the contents of the shop
+                ping cart, you can also check out.</p>
+            <a href="/order/shoppingCart" class="btn btn-primary">Shopping Cart</a>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header">Add address</h5>
+        <div class="card-body">
+            <p class="card-text">Add your address to complete your order!</p>
+            <a href="/user/addAddress" class="btn btn-primary">Add Address</a>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header">Manage Address</h5>
+        <div class="card-body">
+            <p class="card-text">Check your address book, you can delete some addresses that
+                are no longer in use.</p>
+            <a href="/user/viewAddress" class="btn btn-primary">Manage Address</a>
+        </div>
+    </div>
     <button class="btn btn-lg" type="button" onclick="logout()">Log Out</button>
+</div>
 
     <script>
         function logout() {

@@ -15,16 +15,57 @@
 <script>
     $("#navbar-common").load("/common/Navbar.html");
 </script>
-This is an admin index page
-<br>
-<a href="/admin/addNewAdmin">添加新的管理员账户</a>
-<br>
-<a href="/admin/manageAccount">管理所有用户</a>
-<br>
-<a href="/admin/manageOrder">管理所有订单</a>
-<br>
-<a href="/admin/manageDiaryOption">管理参数</a>
-<br>
-<a href="/admin/logout">登出</a>
+<div class="container">
+    <div class="card">
+        <h5 class="card-header">Create New Admin Account</h5>
+        <div class="card-body">
+            <p class="card-text">Click here to create a new administrator account.</p>
+            <a href="/admin/addNewAdmin" class="btn btn-primary">Create Admin Account</a>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header">Manage Accounts</h5>
+        <div class="card-body">
+            <p class="card-text">Click here to view all administrator and user account information
+                , you can delete unnecessary accounts.</p>
+            <a href="/admin/manageAccount" class="btn btn-primary">Shopping Cart</a>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header">Manage Orders</h5>
+        <div class="card-body">
+            <p class="card-text">Click here to manage the order, you can change the status of the order
+                to delivery, completion and production.</p>
+            <a href="/admin/manageOrder" class="btn btn-primary">Manage Orders</a>
+        </div>
+    </div>
+    <div class="card">
+        <h5 class="card-header">Manage Diary Options</h5>
+        <div class="card-body">
+            <p class="card-text">Click here to add or delete diary parameters,
+                such as color and cover material.</p>
+            <a href="/admin/manageDiaryOption" class="btn btn-primary">Manage Diary Options</a>
+        </div>
+    </div>
+    <button class="btn btn-lg" type="button" onclick="logout()">Log Out</button>
+</div>
+
+<script>
+    function logout() {
+        $.ajax({
+            type: "POST",
+            dataType: "json",
+            url: '/admin/logout',
+            contentType: "application/json",
+            success:function (data) {
+                if(data.success)
+                {
+                    alert(data.message);
+                    window.location.href='/admin/login';
+                }
+            }
+        });
+    }
+</script>
 </body>
 </html>

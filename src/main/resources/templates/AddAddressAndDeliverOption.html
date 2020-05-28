@@ -50,20 +50,19 @@
 
         for (var i = 0; i < address.length; i++) {
             var addressString = address[i].address+"  "+address[i].urban+"  "+address[i].state+"  "+address[i].postCode;
-            var single ="<option value="+addressString+">"+addressString+"</option>";
+            var single ="<option value='"+addressString+"'>"+addressString+"</option>";
             $("#inputAddress").append(single);
         }
 
     function addAddressDelivery() {
-        var address = document.getElementById("inputAddress").value;
-
+        var addressValue = document.getElementById("inputAddress").value;
         var deliverOption = $("input[type='radio']:checked").val();
 
         var json = JSON.stringify({
-            "address": address,
+            "address": addressValue,
             "deliverOption": deliverOption,
         });
-
+        console.log(json);
         $.ajax({
             type: "POST",
             dataType: "json",
@@ -74,7 +73,7 @@
                 if(data.success)
                 {
                     alert(data.message);
-                    window.location.href='/homePage';
+                    window.location.href='/user/homePage';
                 }
                 else
                 {

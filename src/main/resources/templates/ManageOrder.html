@@ -37,8 +37,8 @@
             "            </div>\n" +
             "            <div class=\"row\">\n" +
             "                <div class=\"col-md-9\">Address:"+order[i].address+"</div>\n" +
+            "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"production("+i+")\">Production</button></div>\n" +
             "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"ship("+i+")\">Shipping</button></div>\n" +
-            "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"stock("+i+")\">Stocking</button></div>\n" +
             "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"complete("+i+")\">Complete</button></div>\n" +
             "            </div>";
         sum=sum+single;
@@ -71,8 +71,8 @@
         });
     }
 
-    function stock(x) {
-        var state = "Stocking";
+    function production(x) {
+        var state = "In production";
         var id = order[x].id;
         var json = JSON.stringify({
             "id": id,
