@@ -18,32 +18,41 @@
 </script>
 <div>
     <div class="container">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Manage Diary Options</h1>
+        </div>
         <div class="row">
             <div class="col-md-4">
                 <div class="form-label-group">
-                    <input type="text" id="inputCover" class="form-control" placeholder="cover" required autofocus>
                     <label for="inputCover">Cover</label>
+                    <input type="text" id="inputCover" class="form-control" placeholder="cover" required autofocus>
                 </div>
+                <br>
                 <button class="btn btn-lg btn-primary btn-block" type="button" onclick="addCover()">Add Cover</button>
             </div>
             <div class="col-md-4">
                 <div class="form-label-group">
-                    <input type="text" id="inputPaperColor" class="form-control" placeholder="PaperColor" required
-                           autofocus>
                     <label for="inputPaperColor">PaperColor</label>
+                    <input type="text" id="inputPaperColor" class="form-control" placeholder="PaperColor" required autofocus>
                 </div>
-                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="addPaperColor()">Add Paper Color</button>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="addPaperColor()">Add Paper Color</button>
             </div>
             <div class="col-md-4">
                 <div class="form-label-group">
-                    <input type="text" id="inputTypeofPaper" class="form-control" placeholder="TypeofPaper" required
-                           autofocus>
                     <label for="inputTypeofPaper">PaperType</label>
+                    <input type="text" id="inputTypeofPaper" class="form-control" placeholder="TypeofPaper" required autofocus>
                 </div>
-                <button class="btn btn-lg btn-danger btn-block" type="button" onclick="addPaperType()">Add Paper Type</button>
+                <br>
+                <button class="btn btn-lg btn-primary btn-block" type="button" onclick="addPaperType()">Add Paper Type</button>
             </div>
         </div>
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+        </div>
         <div class="row">
+            <h5 class="col-md-4">Cover List</h5>
+            <h5 class="col-md-4">Paper Color List</h5>
+            <h5 class="col-md-4">Paper Type List</h5>
             <div class="col-md-4" id="coverList"></div>
             <div class="col-md-4" id="paperColorList"></div>
             <div class="col-md-4" id="paperTypeList"></div>
@@ -61,8 +70,9 @@
             "    <div class=\"row\">\n" +
             "        <div class=\"col-md-8\">"+paperColor[i].color+"</div>\n" +
             "        <div class=\"col-md-4\">" +
-            "        <button class=\"btn-sm\" onclick=\"deletePaperColor("+i+")\">delete</button></div> \n" +
-            "    </div>";
+            "        <button class=\"btn-sm btn-danger\" onclick=\"deletePaperColor("+i+")\">delete</button></div> \n" +
+            "    </div>" +
+            "    <br>";
         $("#paperColorList").append(single);
     }
     var paperType = $.parseJSON(document.getElementById("paperType").value);
@@ -72,8 +82,9 @@
             "    <div class=\"row\">\n" +
             "        <div class=\"col-md-8\">"+paperType[i].typeOfPaper+"</div>\n" +
             "        <div class=\"col-md-4\">" +
-            "        <button class=\"btn-sm\" onclick=\"deletePaperType("+i+")\">delete</button></div> \n" +
-            "    </div>";
+            "        <button class=\"btn-sm btn-danger\" onclick=\"deletePaperType("+i+")\">delete</button></div> \n" +
+            "    </div>" +
+            "    <br>";
         $("#paperTypeList").append(single);
     }
     var cover = $.parseJSON(document.getElementById("cover").value);
@@ -83,8 +94,9 @@
             "    <div class=\"row\">\n" +
             "        <div class=\"col-md-8\">"+cover[i].coverName+"</div>\n" +
             "        <div class=\"col-md-4\">" +
-            "        <button class=\"btn-sm\" onclick=\"deleteCover("+i+")\">delete</button></div> \n" +
-            "    </div>";
+            "        <button class=\"btn-sm btn-danger\" onclick=\"deleteCover("+i+")\">delete</button></div> \n" +
+            "    </div>" +
+            "    <br>";
         $("#coverList").append(single);
     }
 

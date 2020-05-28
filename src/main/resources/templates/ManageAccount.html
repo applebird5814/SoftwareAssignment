@@ -18,10 +18,20 @@
 
     <input type="hidden" id="admin" th:value="${Admin}"/>
     <input type="hidden" id="user" th:value="${User}"/>
+
     <div class="container">
+        <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+            <h1 class="h2">Manage Accounts</h1>
+        </div>
         <div class="row">
-            <div class="col-md-6" id="adminList"></div>
-            <div class="col-md-6" id="userList"></div>
+            <h4 class="col-md-6">Admin List</h4>
+            <h4 class="col-md-6">User List</h4>
+
+            <div class="col-md-6" id="adminList">
+            </div>
+
+            <div class="col-md-6" id="userList">
+            </div>
         </div>
     </div>
     <script>
@@ -32,24 +42,26 @@
         var adminSum = "";
         for(var i=0;i<admin.length;i++){
             var single =
-                "   <div class=\"row\">\n" +
+                "   <div class=\"d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom\">\n" +
                 "        <div class=\"col-md-9\">"+admin[i].username+"</div>\n" +
                 "        <div class=\"col-md-3\">\n" +
                 "        <button type='button' class=\"btn-sm btn-danger\" onclick=\"removeAdmin(" + i + ")\">Delete</button>"+
                 "        </div>\n" +
-                "    </div>";
+                "    </div>" +
+                "    <br>";
             adminSum = adminSum + single;
         }
         document.getElementById("adminList").innerHTML=adminSum;
         var userSum = "";
         for(var i=0;i<user.length;i++){
             var single =
-                "   <div class=\"row\">\n" +
+                "   <div class=\"d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom\">\n" +
                 "        <div class=\"col-md-9\">"+user[i].username+"</div>\n" +
                 "        <div class=\"col-md-3\">\n" +
                 "        <button type='button' class=\"btn-sm btn-danger\" onclick=\"removeUser(" + i + ")\">Delete</button>"+
                 "        </div>\n" +
-            "    </div>";
+                "    </div>"+
+                "    <br>";
             userSum = userSum + single;
         }
         document.getElementById("userList").innerHTML=userSum;
