@@ -51,7 +51,7 @@ public class AdminController {
         {
             return "AdminLogin";
         }
-        return "adminIndex";
+        return "AdminIndex";
     }
 
     @ResponseBody
@@ -195,7 +195,7 @@ public class AdminController {
         model.addAttribute("TypeOfPaper",new Gson().toJson(diaryService.getTypeOfPapers()));
         model.addAttribute("Color",new Gson().toJson(diaryService.getPaperColors()));
         model.addAttribute("Cover",new Gson().toJson(diaryService.getCovers()));
-        return "EditDiaryOption";
+        return "ManageDiaryOption";
     }
 
     @RequestMapping("/manageAccount")
