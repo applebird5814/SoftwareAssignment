@@ -21,14 +21,13 @@
     <div class="row">
         <div class="col-md-12" id="orderList"></div>
     </div>
-
 </div>
 
 <script>
     var order=$.parseJSON(document.getElementById("order").value);
     var sum = "";
     for(var i=0;i<order.length;i++){
-        var single ="            <div class=\"row\">\n" +
+        var single ="    <div class=\"row\">\n" +
             "                <div class=\"col-md-2\">Order Number:"+order[i].id+"</div>\n" +
             "                <div class=\"col-md-2\">User Id:"+order[i].userId+"</div>\n" +
             "                <div class=\"col-md-3\">Order Time:"+order[i].time+"</div>\n" +
@@ -36,10 +35,10 @@
             "                <div class=\"col-md-3\">State:"+order[i].state+"</div>\n" +
             "            </div>\n" +
             "            <div class=\"row\">\n" +
-            "                <div class=\"col-md-9\">Address:"+order[i].address+"</div>\n" +
+            "                <div class=\"col-md-8\">Address:"+order[i].address+"</div>\n" +
             "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"production("+i+")\">Production</button></div>\n" +
             "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"ship("+i+")\">Shipping</button></div>\n" +
-            "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"complete("+i+")\">Complete</button></div>\n" +
+            "                <div class=\"col-md-1\"><button class=\"btn-sm\" onclick=\"complete("+i+")\">Completed</button></div>\n" +
             "            </div><br>";
         sum=sum+single;
     }
