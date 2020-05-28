@@ -13,7 +13,6 @@ import org.springframework.test.context.web.WebAppConfiguration;
 @WebAppConfiguration
 class SoftwareApplicationTests {
 
-
     @Before
     public void init() {
         System.out.println("————————————Start Testing——————————");
