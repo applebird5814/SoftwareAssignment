@@ -9,6 +9,12 @@
     <title>Manage Order</title>
 </head>
 <body>
+<div class="container">
+    <div id="navbar-common"></div>
+</div>
+<script>
+    $("#navbar-common").load("/common/Navbar.html");
+</script>
 <input type="hidden" id="order" th:value="${Order}"/>
 
 <div class="container">

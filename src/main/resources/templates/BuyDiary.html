@@ -9,22 +9,12 @@
     <title>Customize your diary!</title>
 </head>
 <body>
-<nav class="navbar navbar-expand-sm bg-light navbar-light">
-    <ul class="navbar-nav">
-        <li class="nav-item active">
-            <a class="nav-link" href="/homePage">Home</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/BuyDiary">Buy Diary!</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link" href="/register">Sign up!</a>
-        </li>
-        <li class="nav-item">
-            <a class="nav-link disabled" href="#">Disabled</a>
-        </li>
-    </ul>
-</nav>
+<div class="container">
+    <div id="navbar-common"></div>
+</div>
+<script>
+    $("#navbar-common").load("/common/Navbar.html");
+</script>
 <input type="hidden" id="paperColor" th:value="${Color}"/>
 <input type="hidden" id="paperType" th:value="${TypeOfPaper}"/>
 <input type="hidden" id="cover" th:value="${Cover}"/>

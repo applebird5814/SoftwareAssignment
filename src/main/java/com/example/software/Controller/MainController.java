@@ -8,13 +8,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 public class MainController {
 
     @RequestMapping("/*")
-    @ResponseBody
-    public String HelloWorld()
-    {
-        return "hello world";
-    }
-
-    @RequestMapping("/index")
     public String index()
     {
         return "index";

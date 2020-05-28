@@ -120,15 +120,6 @@ public class UserController {
         }
         return false;
     }
-    @RequestMapping("/editAddress")
-    public String editAddress(HttpServletRequest httpServletRequest)
-    {
-        if(!validation(httpServletRequest))
-        {
-            return "Login";
-        }
-        return "EditAddress";
-    }
 
     @RequestMapping("/addAddress")
     public String addAddress(HttpServletRequest httpServletRequest)
