@@ -3,7 +3,6 @@ package com.example.software;
 import com.example.software.Entity.Address;
 import com.example.software.Service.AddressService;
 import org.junit.Assert;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
