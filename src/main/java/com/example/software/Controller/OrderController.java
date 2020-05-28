@@ -136,8 +136,7 @@ public class OrderController {
     @ResponseBody
     @RequestMapping("/paymentSuccess")
     public String finishOrder(@RequestBody DiaryOrder diaryOrder){
-        //更新order内容，前端提供了更新了地址和deliver option的一个新的order对象
-        //返回一个gson字符串
+
         return "gson";
     }
 

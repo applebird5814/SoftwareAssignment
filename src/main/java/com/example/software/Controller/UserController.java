@@ -143,4 +143,15 @@ public class UserController {
         model.addAttribute("Address",new Gson().toJson(addressService.findByUserId(user.getId())));
         return "ViewAddress";
     }
+
+    @RequestMapping("/homePage")
+    public String homePage(HttpServletRequest httpServletRequest)
+    {
+        if(!validation(httpServletRequest))
+        {
+            return "Login";
+        }
+        return "HomePage";
+    }
+
 }
