@@ -11,4 +11,6 @@ public interface OrderService {
     boolean changeOrderState(int id,String state);
 
     List<DiaryOrder> getAllOrder();
+
+    List<DiaryOrder> getAllByUserId(String userId);
 }

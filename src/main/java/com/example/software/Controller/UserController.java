@@ -1,9 +1,11 @@
 package com.example.software.Controller;
 
+import com.example.software.Entity.DiaryOrder;
 import com.example.software.Entity.Response;
 import com.example.software.Entity.User;
 import com.example.software.Service.AddressService;
 import com.example.software.Service.DiaryService;
+import com.example.software.Service.OrderService;
 import com.example.software.Service.UserService;
 import com.google.gson.Gson;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +21,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @RequestMapping("/user")
@@ -36,6 +40,10 @@ public class UserController {
     @Autowired
     @Qualifier("AddressServiceImpl")
     AddressService addressService;
+
+    @Autowired
+    @Qualifier("orderServiceImpl")
+    OrderService orderService;
 
     @RequestMapping("/viewDiary")
     public String customization(HttpServletRequest httpServletRequest,Model model)
@@ -97,8 +105,15 @@ public class UserController {
     }
 
     @RequestMapping("/history")
-    public String history(Model model){
-        // To do
+    public String history(Model model,HttpServletRequest httpServletRequest){
+        if(!validation(httpServletRequest))
+        {
+            return "Login";
+        }
+        HttpSession httpSession =httpServletRequest.getSession();
+        User user = (User)httpSession.getAttribute("user");
+        List<DiaryOrder> list = orderService.getAllByUserId(user.getId());
+        model.addAttribute("Order",new Gson().toJson(list));
         return "History";
     }
 

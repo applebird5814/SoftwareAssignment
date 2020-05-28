@@ -38,4 +38,9 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.findAll();
     }
 
+    @Override
+    public List<DiaryOrder> getAllByUserId(String userId) {
+        return orderDao.findByUserId(userId);
+    }
+
 }

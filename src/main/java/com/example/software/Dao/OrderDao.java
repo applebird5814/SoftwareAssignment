@@ -16,6 +16,8 @@ public interface OrderDao extends JpaRepository<DiaryOrder,Integer> {
 
     Optional<DiaryOrder> findById(int id);
 
+    List<DiaryOrder> findByUserId(String userId);
+
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query("update DiaryOrder a set a.address=?2,a.deliverOption=?3 where a.id=?1")
