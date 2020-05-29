@@ -45,4 +45,14 @@ public class OrderServiceImpl implements OrderService {
         return orderDao.findByUserId(userId);
     }
 
+    @Override
+    public boolean deleteById(int id) {
+        if (orderDao.findById(id).isPresent()) {
+            orderDao.deleteById(id);
+            return true;
+        }
+        return false;
+    }
+
+
 }

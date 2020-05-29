@@ -65,4 +65,9 @@ public class OrderServiceTest extends SoftwareApplicationTests {
         diaryOrders = orderService.getAllByUserId("userid testing");
         Assert.assertSame("get all by user id success",1,diaryOrders.size());
     }
+
+    @Test
+    public void GDeleteOrder(){
+        Assert.assertSame("delete success",true,orderService.deleteById(1));
+    }
 }

@@ -13,4 +13,7 @@ public interface OrderService {
     List<DiaryOrder> getAllOrder();
 
     List<DiaryOrder> getAllByUserId(String userId);
+
+
+    boolean deleteById(int id);
 }
