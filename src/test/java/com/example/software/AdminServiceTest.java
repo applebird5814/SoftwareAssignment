@@ -1,5 +1,6 @@
 package com.example.software;
 
+import com.example.software.Dao.AdminDao;
 import com.example.software.Entity.Admin;
 import com.example.software.Service.AdminService;
 import org.junit.Assert;
@@ -15,6 +16,9 @@ public class AdminServiceTest extends SoftwareApplicationTests{
     @Autowired
     @Qualifier("AdminServiceImpl")
     AdminService adminService;
+
+    @Autowired
+    private AdminDao adminDao;
 
     @Test
     public void ACreateAdmin(){
@@ -39,12 +43,26 @@ public class AdminServiceTest extends SoftwareApplicationTests{
     }
 
     @Test
-    public void CDeleteAdminSuccess(){
+    public void CCheckExist(){
+        Assert.assertSame("exist",true, adminDao.findById("testtttt").isPresent());
+    }
+
+    @Test
+    public void DChangePassword(){
+        Admin admin = adminDao.findById("testtttt").get();
+        admin.setPassword("passwordkkkkk");
+        adminService.deleteAdminById("testtttt");
+        adminService.createAdmin(admin);
+        Assert.assertSame("change success","passwordkkkkk", adminDao.findById("testtttt").get().getPassword());
+    }
+
+    @Test
+    public void EDeleteAdminSuccess(){
         Assert.assertSame("delete success",true,adminService.deleteAdminById("testtttt"));
     }
 
     @Test
-    public void DDeleteAddressFail(){
+    public void FDeleteAddressFail(){
         Assert.assertSame("delete success",false,adminService.deleteAdminById("testtttt"));
     }
 
